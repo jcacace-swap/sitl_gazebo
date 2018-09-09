@@ -43,9 +43,8 @@
     ixy="0.0" ixz="0.0"  iyz="0.0" /> <!-- [kg.m^2] [kg.m^2] [kg.m^2] [kg.m^2] [kg.m^2] [kg.m^2] -->
   </xacro:property>
 
-  <!-- Included URDF Files --> 
+  <!-- Included URDF Files -->
   <xacro:include filename="$(arg rotors_description_dir)/urdf/multirotor_base.xacro" />
-
 
   <!-- Instantiate multirotor_base_macro once -->
   <xacro:multirotor_base_macro
