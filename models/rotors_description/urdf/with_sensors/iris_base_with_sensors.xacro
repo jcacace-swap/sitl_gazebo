@@ -28,7 +28,7 @@
   <xacro:include filename="$(arg rotors_description_dir)/urdf/component_snippets.xacro" />
 
   <!-- Instantiate iris "mechanics" -->
-  <xacro:include filename="$(arg rotors_description_dir)/urdf/iris.xacro" />
+  <xacro:include filename="$(arg rotors_description_dir)/urdf/with_sensors/iris_with_sensors.xacro" />
 
   <xacro:if value="$(arg enable_wind)">
     <xacro:wind_plugin_macro
