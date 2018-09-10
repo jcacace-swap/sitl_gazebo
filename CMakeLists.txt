@@ -198,6 +198,19 @@ add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/models/iris/iris.sdf
 add_custom_target(sdf ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/models/iris/iris.sdf)
 
 
+add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/models/iris_with_camera/iris_with_camera.sdf
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+  COMMAND rm -f ${CMAKE_CURRENT_SOURCE_DIR}/models/iris_with_camera/iris_with_camera.sdf
+  COMMAND ${PYTHON_EXECUTABLE} ${scripts_dir}/xacro.py -o  ${rotors_description_dir}/urdf/with_camera/iris_base_with_camera.urdf  ${rotors_description_dir}/urdf/with_camera/iris_base_with_camera.xacro enable_mavlink_interface:=${enable_mavlink_interface} enable_ground_truth:=${enable_ground_truth} enable_wind:=${enable_wind} enable_logging:=${enable_logging} rotors_description_dir:=${rotors_description_dir}
+  COMMAND gz sdf -p  ${rotors_description_dir}/urdf/with_camera/iris_base_with_camera.urdf >> ${CMAKE_CURRENT_SOURCE_DIR}/models/iris_with_camera/iris_with_camera.sdf
+  COMMAND rm -f ${rotors_description_dir}/urdf/with_camera/iris_base_with_camera.urdf
+	COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/../../posix-configs/SITL/init/ekf2/iris ${CMAKE_CURRENT_SOURCE_DIR}/../../posix-configs/SITL/init/ekf2/iris_with_camera
+  DEPENDS ${rotors_description_dir}/urdf/with_camera/iris_with_camera.xacro
+  DEPENDS ${rotors_description_dir}/urdf/with_camera/iris_base_with_camera.xacro
+  DEPENDS ${rotors_description_dir}/urdf/component_snippets.xacro
+  )
+add_custom_target(sdf_with_camera ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/models/iris_with_camera/iris_with_camera.sdf)
+
 add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/models/iris_with_sensors/iris_with_sensors.sdf
   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
   COMMAND rm -f ${CMAKE_CURRENT_SOURCE_DIR}/models/iris_with_sensors/iris_with_sensors.sdf
