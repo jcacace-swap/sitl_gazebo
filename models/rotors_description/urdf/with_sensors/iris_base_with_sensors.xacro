@@ -124,6 +124,19 @@
     <origin xyz="0 0 0" rpy="0 0 0" />
   </xacro:imu_plugin_macro>
 
+	<xacro:sonar_sensor
+		name="sonar"
+		parent="base_link"
+		ros_topic="distance"
+		min_range="0.2"
+		max_range="8.0"
+		field_of_view="10"
+		ray_count="2"
+		update_rate="5"
+	>
+	  <origin xyz="0.0 0.0 -0.04" rpy="0 0 3.14" />
+	</xacro:sonar_sensor>
+
   <xacro:if value="$(arg enable_ground_truth)">
     <!-- Mount an IMU providing ground truth. -->
     <xacro:imu_plugin_macro
