@@ -72,8 +72,21 @@
   </xacro:mavlink_interface_macro>
   </xacro:if>
 
-	<!-- Mount a Camera -->
+	<xacro:sonar_sensor
+		name="sonar"
+		parent="base_link"
+		ros_topic="distance"
+		min_range="0.2"
+		max_range="8.0"
+		field_of_view="10"
+		ray_count="2"
+		update_rate="5"
+	>
+	  <origin xyz="0.0 0.0 -0.05" rpy="0 0 3.14" />
+	</xacro:sonar_sensor>
 
+	<!-- Mount a Camera -->	
+	<!--
 	<xacro:camera_macro
 		  namespace="${namespace}"
 			parent_link="base_link"
@@ -92,18 +105,19 @@
 		<box size="0.02 0.02 0.02" />
 		<origin xyz="0.12 0 -0.02" rpy="0.0 1.1 0.0" />
 	</xacro:camera_macro>
-
-	<!--
+	-->
+	
   <xacro:xtion_pro_live name="rgbd_camera" parent="base_link"> 
 	 	<origin xyz="0.11 0.0 -0.02" rpy="0.0 0.95 0.0"/>
     <origin xyz="0 0 0" rpy="0.0 0 0.0"/>
 	</xacro:xtion_pro_live>
--->
-<!--
-	    <xacro:hokuyo_utm30lx name="laser_scanner" parent="base_link" ros_topic="scan" update_rate="40" ray_count="1081" min_angle="-135" max_angle="135">
-      <origin xyz="0.3 0.2 0.06" rpy="${M_PI} 0 0"/>
-    </xacro:hokuyo_utm30lx>
-	-->
+
+	
+
+  <xacro:hokuyo_utm30lx name="laser_scanner" parent="base_link" ros_topic="scan" update_rate="40" ray_count="1081" min_angle="-135" max_angle="135">
+    <origin xyz="0.0 0.0 0.06" rpy="${M_PI} 0 0"/>
+  </xacro:hokuyo_utm30lx>
+
   <!-- Mount an ADIS16448 IMU. -->
   <xacro:imu_plugin_macro
     namespace="${namespace}"
@@ -123,19 +137,6 @@
     <inertia ixx="0.00001" ixy="0.0" ixz="0.0" iyy="0.00001" iyz="0.0" izz="0.00001" />
     <origin xyz="0 0 0" rpy="0 0 0" />
   </xacro:imu_plugin_macro>
-
-	<xacro:sonar_sensor
-		name="sonar"
-		parent="base_link"
-		ros_topic="distance"
-		min_range="0.2"
-		max_range="8.0"
-		field_of_view="10"
-		ray_count="2"
-		update_rate="5"
-	>
-	  <origin xyz="0.0 0.0 -0.04" rpy="0 0 3.14" />
-	</xacro:sonar_sensor>
 
   <xacro:if value="$(arg enable_ground_truth)">
     <!-- Mount an IMU providing ground truth. -->
