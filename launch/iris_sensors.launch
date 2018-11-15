@@ -48,9 +48,15 @@
     <node name="$(anon vehicle_spawn)" pkg="gazebo_ros" type="spawn_model" output="screen" args="-sdf -file $(arg sdf) -model $(arg vehicle) -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg R) -P $(arg P) -Y $(arg Y)"/>
 
   <arg name="fcu_url" default="udp://:14540@localhost:14557"/>
-    <include file="$(find mavros)/launch/px4.launch">
+		<include file="$(find mavlink_sitl_gazebo)/launch/mavros_udp/px4.launch">
         <arg name="gcs_url" value=""/>
         <arg name="fcu_url" value="$(arg fcu_url)"/>
     </include>
+		<!--    
+		<include file="$(find mavros)/launch/px4.launch">
+        <arg name="gcs_url" value=""/>
+        <arg name="fcu_url" value="$(arg fcu_url)"/>
+    </include>
+		-->
 </launch>
 

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+
+		<!--Static transformation from FCU to sensors -->
+		<node pkg="tf" type="static_transform_publisher" name="static_transform_laser_scanner" args="0 0 0.1 0 0.0 3.14 /fcu /laser_scanner_frame 100"/> 
+
+	<node pkg="tf" type="static_transform_publisher" name="static_transform_imu" args="0 0 0.0 0 0.0 0.0 /fcu /imu 100"/>
+
+</launch>
+
