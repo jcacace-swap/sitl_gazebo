@@ -77,12 +77,12 @@
 		parent="base_link"
 		ros_topic="distance_forward"
 		min_range="0.2"
-		max_range="8.0"
+		max_range="60.0"
 		field_of_view="10"
 		ray_count="2"
 		update_rate="5"
 	>
-	  <origin xyz="0.1 0.0 -0.05" rpy="0 1.04 3.14" />
+	  <origin xyz="0.2 0.0 -0.05" rpy="0 1.05 3.14" />
 	</xacro:sonar_sensor>
 
 	<xacro:sonar_sensor
@@ -90,7 +90,7 @@
 		parent="base_link"
 		ros_topic="distance_middle"
 		min_range="0.2"
-		max_range="8.0"
+		max_range="60.0"
 		field_of_view="10"
 		ray_count="2"
 		update_rate="5"
@@ -104,14 +104,14 @@
 		parent="base_link"
 		ros_topic="distance_backward"
 		min_range="0.2"
-		max_range="8.0"
+		max_range="60.0"
 		field_of_view="10"
 		ray_count="2"
 		update_rate="5"
 	>
-	  <origin xyz="-0.1 0.0 -0.05" rpy="0 -1.04 3.14" />
+	  <origin xyz="-0.2 0.0 -0.05" rpy="0.0 1.05 0.0" />
 	</xacro:sonar_sensor>
-
+<!---->
 
 	<!-- Mount a Camera -->	
 	<!--

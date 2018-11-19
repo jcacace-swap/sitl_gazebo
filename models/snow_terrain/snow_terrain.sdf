@@ -5,14 +5,14 @@
       <collision name="collision">
         <geometry>
           <mesh>
-            <uri>model://landscape/meshes/120m_landscape_smooth_tri.dae</uri>
+            <uri>model://snow_terrain/meshes/SnowTerrain.dae</uri>
           </mesh>
         </geometry>
       </collision>
       <visual name="visual">
         <geometry>
           <mesh>
-            <uri>model://landscape/meshes/120m_landscape_smooth_tri.dae</uri>
+            <uri>model://snow_terrain/meshes/SnowTerrain.dae</uri>
           </mesh>
         </geometry>
       </visual>

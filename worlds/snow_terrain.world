@@ -11,25 +11,9 @@
       <uri>model://ground_plane</uri>
 
     </include>
-		<!--		
-		<include>
-      <uri>model://asphalt_plane</uri>
-    </include>
-		-->
-		<light type="directional" name="my_light">
-			<pose>0 0 30 0 0 0</pose>
-			<diffuse>1.0 1.0 1.0 1.0</diffuse>
-			<specular>.1 .1 .1 1</specular>
-			<attenuation>
-				  <range>100</range>
-			</attenuation>
-			<direction>0 0 -1</direction>
-			<cast_shadows>true</cast_shadows>
-		</light>
-		
-
+	
     <include>
-      <uri>model://landscape</uri>
+      <uri>model://snow_terrain</uri>
 			<static>true</static>
     </include>
 
