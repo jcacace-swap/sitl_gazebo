@@ -6,12 +6,13 @@
       <uri>model://sun</uri>
     </include>
     <!-- A ground plane -->
+	
     <include>
       <uri>model://ground_plane</uri>
 
     </include>
-		<!--
-    <include>
+		<!--		
+		<include>
       <uri>model://asphalt_plane</uri>
     </include>
 		-->
@@ -26,12 +27,12 @@
 			<cast_shadows>true</cast_shadows>
 		</light>
 		
-	
+
     <include>
       <uri>model://landscape</uri>
 			<static>true</static>
     </include>
-	
+
 		<physics name='default_physics' default='0' type='ode'>
       <gravity>0 0 -9.8066</gravity>
       <ode>
