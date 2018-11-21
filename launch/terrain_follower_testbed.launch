@@ -1,23 +1,23 @@
 <?xml version="1.0"?>
 <launch>
-
-	
-
     <!-- Posix SITL environment launch script -->
     <!-- launches PX4 SITL, Gazebo environment, and spawns vehicle -->
     <!-- vehicle pose -->
     <arg name="x" default="0"/>
     <arg name="y" default="0"/>
-    <arg name="z" default="0"/>
+    <arg name="z" default="1"/>
     <arg name="R" default="0"/>
     <arg name="P" default="0"/>
     <arg name="Y" default="0"/>
 
     <!-- vehicle model and world -->
     <arg name="est" default="ekf2"/>
-    <arg name="vehicle" default="iris_with_sensors"/>
-    <arg name="world" default="$(find mavlink_sitl_gazebo)/worlds/plant.world"/>
-    <arg name="sdf" default="$(find mavlink_sitl_gazebo)/models/$(arg vehicle)/$(arg vehicle).sdf"/>
+    <arg name="vehicle" default="iris_with_terrain_sensors"/>
+		<!--
+   	<arg name="world" value="$(find mavlink_sitl_gazebo)/worlds/snow_mountain.world"/> 
+		-->    
+		<arg name="world" value="$(find mavlink_sitl_gazebo)/worlds/snow_terrain_testbed.world"/> 
+		<arg name="sdf" default="$(find mavlink_sitl_gazebo)/models/$(arg vehicle)/$(arg vehicle).sdf"/>
     <env name="PX4_SIM_MODEL" value="iris" />
     <env name="PX4_ESTIMATOR" value="$(arg est)" />
 
@@ -47,15 +47,18 @@
         <arg name="respawn_gazebo" value="$(arg respawn_gazebo)"/>
     </include>
 
+		<!-- Joypad -->
+    <node name="joy" pkg="joy" type="joy_node" output="screen">
+			<param name="dev" type="string" value="/dev/input/js0"/>
+		</node>
+
     <!-- gazebo model -->
     <node name="$(anon vehicle_spawn)" pkg="gazebo_ros" type="spawn_model" output="screen" args="-sdf -file $(arg sdf) -model $(arg vehicle) -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg R) -P $(arg P) -Y $(arg Y)"/>
 
-  <arg name="fcu_url" default="udp://:14540@localhost:14557"/>
+<arg name="fcu_url" default="udp://:14540@localhost:14557"/>
 		<include file="$(find mavlink_sitl_gazebo)/launch/mavros_udp/px4.launch">
         <arg name="gcs_url" value=""/>
         <arg name="fcu_url" value="$(arg fcu_url)"/>
     </include>
-
-
 </launch>
 
