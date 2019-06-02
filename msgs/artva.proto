@@ -1,0 +1,12 @@
+package artva_gazebo_plugin.msgs;
+
+message Artva {
+	required int32 id = 1;
+	required float x 	= 2;
+	required float y	= 3;
+	required float z 	= 4;
+	required float qw = 5;
+	required float qx = 6;
+	required float qy = 7;
+	required float qz = 8;
+}

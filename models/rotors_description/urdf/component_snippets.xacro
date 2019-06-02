@@ -205,6 +205,55 @@
     </gazebo>
   </xacro:macro>
 
+  <xacro:macro name="artva_macro" params="channels frame_id *origin">
+    <link name="receiver">
+			<!--
+		  <collision>
+		    <origin xyz="-0.12 0.0 0.0" rpy="0 0 0"/>
+		    <geometry>
+		      <box size="0.05 0.05 0.05"/>
+		    </geometry>
+		  </collision>
+			-->
+		  <visual>
+		    <origin xyz="-0.18 0.0 0.0" rpy="0 0 0"/>
+		    <geometry>
+		      <box size="0.01 0.01 0.01"/>
+		    </geometry>
+		    <material name="orange"/>
+		  </visual>
+			<!--
+		  <inertial>
+		    <origin xyz="0 0 1" rpy="0 0 0"/>
+		    <mass value="1"/>
+		    <inertia
+		      ixx="1.0" ixy="0.0" ixz="0.0"
+		      iyy="1.0" iyz="0.0"
+		      izz="1.0"/>
+		  </inertial>
+			-->
+		</link>
+ 		<joint name="receiver_joint" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="base_link" />
+      <child link="receiver" />
+    </joint>
+
+		<material name="orange">
+		  <color rgba="${255/255} ${108/255} ${10/255} 1.0"/>
+		</material>
+	 
+		<gazebo reference="receiver">
+		  <material>Gazebo/Orange</material>
+		</gazebo>		
+
+		<gazebo>
+			<plugin filename="libarva_sim_receiver.so" name="receiver">
+				<channels>${channels}</channels>
+				<frame_id>${frame_id}</frame_id>
+		  </plugin>
+		</gazebo>
+  </xacro:macro>
   <!-- Macro to add the mavlink interface. -->
   <xacro:macro name="mavlink_interface_macro" params="namespace imu_sub_topic gps_sub_topic mavlink_addr mavlink_udp_port serial_enabled serial_device baudrate qgc_addr qgc_udp_port hil_mode hil_state_level vehicle_is_tailsitter send_odometry">
     <gazebo>

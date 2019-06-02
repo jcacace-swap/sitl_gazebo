@@ -55,6 +55,9 @@ if (BUILD_ROS_INTERFACE)
   find_package(geometry_msgs REQUIRED)
   find_package(roscpp REQUIRED)
   find_package(sensor_msgs REQUIRED)
+	find_package(artva_gazebo_plugin REQUIRED)
+	find_package(tf REQUIRED)
+	find_package(roslib REQUIRED)
 endif()
 
 # find MAVLink
@@ -211,6 +214,20 @@ add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/models/iris_with_camera/ir
   )
 add_custom_target(sdf_with_camera ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/models/iris_with_camera/iris_with_camera.sdf)
 
+
+add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/models/iris_with_artva/iris_with_artva.sdf
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+  COMMAND rm -f ${CMAKE_CURRENT_SOURCE_DIR}/models/iris_with_artva/iris_with_artva.sdf
+  COMMAND ${PYTHON_EXECUTABLE} ${scripts_dir}/xacro.py -o  ${rotors_description_dir}/urdf/with_artva/iris_base_with_artva.urdf  ${rotors_description_dir}/urdf/with_artva/iris_base_with_artva.xacro enable_mavlink_interface:=${enable_mavlink_interface} enable_ground_truth:=${enable_ground_truth} enable_wind:=${enable_wind} enable_logging:=${enable_logging} rotors_description_dir:=${rotors_description_dir}
+  COMMAND gz sdf -p  ${rotors_description_dir}/urdf/with_artva/iris_base_with_artva.urdf >> ${CMAKE_CURRENT_SOURCE_DIR}/models/iris_with_artva/iris_with_artva.sdf
+  COMMAND rm -f ${rotors_description_dir}/urdf/with_artva/iris_base_with_artva.urdf
+	COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/../../posix-configs/SITL/init/ekf2/iris ${CMAKE_CURRENT_SOURCE_DIR}/../../posix-configs/SITL/init/ekf2/iris_with_artva
+  DEPENDS ${rotors_description_dir}/urdf/with_artva/iris_with_artva.xacro
+  DEPENDS ${rotors_description_dir}/urdf/with_artva/iris_base_with_artva.xacro
+  DEPENDS ${rotors_description_dir}/urdf/component_snippets.xacro
+  )
+add_custom_target(sdf_with_artva ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/models/iris_with_artva/iris_with_artva.sdf)
+
 add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/models/iris_with_sensors/iris_with_sensors.sdf
   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
   COMMAND rm -f ${CMAKE_CURRENT_SOURCE_DIR}/models/iris_with_sensors/iris_with_sensors.sdf
@@ -288,6 +305,7 @@ set(sensor_msgs
   msgs/Range.proto
   msgs/SITLGps.proto
   msgs/OpticalFlow.proto
+	msgs/artva.proto
   )
 
 PROTOBUF_GENERATE_CPP(MAV_PROTO_SRCS MAV_PROTO_HDRS ${mav_msgs})
@@ -360,6 +378,7 @@ if (BUILD_ROS_INTERFACE)
     include
     ${geometry_msgs_INCLUDE_DIRS}
     ${sensor_msgs_INCLUDE_DIRS}
+		${tf_INCLUDE_DIRS}
   )
 
   target_link_libraries(gazebo_motor_failure_plugin
