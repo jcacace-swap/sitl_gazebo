@@ -1,20 +1,12 @@
 <?xml version="1.0" ?>
 <sdf version="1.5">
   <world name="default">
-    <!-- A global light source -->
+
+    <!-- Lights -->
     <include>
       <uri>model://sun</uri>
     </include>
-    <!-- A ground plane -->
-    <include>
-      <uri>model://ground_plane</uri>
 
-    </include>
-		<!--
-    <include>
-      <uri>model://asphalt_plane</uri>
-    </include>
-		-->
 		<light type="directional" name="my_light">
 			<pose>0 0 30 0 0 0</pose>
 			<diffuse>1.0 1.0 1.0 1.0</diffuse>
@@ -22,12 +14,19 @@
 			<attenuation>
 				  <range>100</range>
 			</attenuation>
-			<direction>0 0 -1</direction>
-			<cast_shadows>true</cast_shadows>
+			<direction>0 0 -1</direction>		
 		</light>
 
-
+    <!-- A ground plane -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
 		
+    <include>
+      <uri>model://asphalt_plane</uri>
+    </include>
+		
+		<!--PIPES-->		
     <model name="pipe6_1">
 			<include>
 		    <uri>model://pipe6</uri>
@@ -159,7 +158,8 @@
 		    <static>1</static>
 		  </include>
 		</model>
-
+	
+		<!--PHYSICS-->
 		<physics name='default_physics' default='0' type='ode'>
       <gravity>0 0 -9.8066</gravity>
       <ode>
@@ -181,11 +181,5 @@
       <real_time_update_rate>500</real_time_update_rate>
       <magnetic_field>6.0e-6 2.3e-5 -4.2e-5</magnetic_field>
     </physics>
-
-
-
-	
   </world>
-
-
 </sdf>
