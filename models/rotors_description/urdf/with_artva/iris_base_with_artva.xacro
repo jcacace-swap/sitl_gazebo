@@ -107,9 +107,9 @@
 		<origin xyz="0.12 0 -0.02" rpy="0.0 1.1 0.0" />
 	</xacro:camera_macro>
 	
-	<xacro:artva_macro channels="2" frame_id="artva">
+	<xacro:arva_macro channels="1" frame_id="artva" sensor_name="receiver1">
 		      <origin xyz="0 0 0" rpy="0 0 0" />
-	</xacro:artva_macro>
+	</xacro:arva_macro>
 
 
 	<!--

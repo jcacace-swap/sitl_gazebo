@@ -139,7 +139,7 @@
           </clip>
         </camera>
         <plugin name='rgbd_camera_frame_controller' filename='libgazebo_ros_openni_kinect.so'>
-          <alwaysOn>1</alwaysOn>
+          <alwaysOn>true</alwaysOn>
           <updateRate>5.0</updateRate>
           <cameraName>rgbd_camera</cameraName>
           <imageTopicName>ir/image_raw</imageTopicName>
@@ -170,7 +170,7 @@
           </clip>
         </camera>
         <plugin name='rgbd_camera_frame_controller' filename='libgazebo_ros_openni_kinect.so'>
-          <alwaysOn>1</alwaysOn>
+          <alwaysOn>true</alwaysOn>
           <updateRate>6.0</updateRate>
           <cameraName>rgbd_camera</cameraName>
           <imageTopicName>rgb/image_raw</imageTopicName>
@@ -187,6 +187,7 @@
       </sensor>
       <gravity>1</gravity>
       <velocity_decay/>
+      <self_collide>0</self_collide>
       <sensor name='sonar' type='ray'>
         <always_on>1</always_on>
         <update_rate>5</update_rate>
@@ -301,6 +302,7 @@
       </visual>
       <gravity>1</gravity>
       <velocity_decay/>
+      <self_collide>0</self_collide>
     </link>
     <joint name='rotor_0_joint' type='revolute'>
       <child>rotor_0</child>
@@ -366,6 +368,7 @@
       </visual>
       <gravity>1</gravity>
       <velocity_decay/>
+      <self_collide>0</self_collide>
     </link>
     <joint name='rotor_1_joint' type='revolute'>
       <child>rotor_1</child>
@@ -431,6 +434,7 @@
       </visual>
       <gravity>1</gravity>
       <velocity_decay/>
+      <self_collide>0</self_collide>
     </link>
     <joint name='rotor_2_joint' type='revolute'>
       <child>rotor_2</child>
@@ -496,6 +500,7 @@
       </visual>
       <gravity>1</gravity>
       <velocity_decay/>
+      <self_collide>0</self_collide>
     </link>
     <joint name='rotor_3_joint' type='revolute'>
       <child>rotor_3</child>
@@ -588,7 +593,7 @@
     </plugin>
     <plugin name='gps_plugin' filename='libgazebo_gps_plugin.so'>
       <robotNamespace/>
-      <gpsNoise>1</gpsNoise>
+      <gpsNoise>true</gpsNoise>
     </plugin>
     <plugin name='mavlink_interface' filename='libgazebo_mavlink_interface.so'>
       <robotNamespace/>
@@ -596,15 +601,15 @@
       <gpsSubTopic>/gps</gpsSubTopic>
       <mavlink_addr>INADDR_ANY</mavlink_addr>
       <mavlink_udp_port>14560</mavlink_udp_port>
-      <serialEnabled>0</serialEnabled>
+      <serialEnabled>false</serialEnabled>
       <serialDevice>/dev/ttyACM0</serialDevice>
       <baudRate>921600</baudRate>
       <qgc_addr>INADDR_ANY</qgc_addr>
       <qgc_udp_port>14550</qgc_udp_port>
-      <hil_mode>0</hil_mode>
-      <hil_state_level>0</hil_state_level>
-      <vehicle_is_tailsitter>0</vehicle_is_tailsitter>
-      <send_odometry>0</send_odometry>
+      <hil_mode>false</hil_mode>
+      <hil_state_level>false</hil_state_level>
+      <vehicle_is_tailsitter>false</vehicle_is_tailsitter>
+      <send_odometry>false</send_odometry>
       <motorSpeedCommandPubTopic>/gazebo/command/motor_speed</motorSpeedCommandPubTopic>
       <control_channels>
         <channel name='rotor1'>

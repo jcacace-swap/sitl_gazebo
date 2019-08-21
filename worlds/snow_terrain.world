@@ -5,7 +5,7 @@
     <include>
       <uri>model://sun</uri>
     </include>
-
+		<!--
 		<light type="directional" name="my_light">
 			<pose>0 0 30 0 0 0</pose>
 			<diffuse>1.0 1.0 1.0 1.0</diffuse>
@@ -15,7 +15,7 @@
 			</attenuation>
 			<direction>0 0 -1</direction>		
 		</light>
-
+		-->
     <include>
       <uri>model://ground_plane</uri>
 	 		<pose>0.0 0.0 0.0 0 0 0</pose>
@@ -23,7 +23,7 @@
 	
     <include>
       <uri>model://snow_terrain</uri>
-	 		<pose>0.0 0.0 0.0 0 0 0</pose>
+	 		<pose>5.0 17.0 0.0 0 0 0</pose>
 			<static>true</static>
     </include>
 

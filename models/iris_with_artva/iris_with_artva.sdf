@@ -622,7 +622,8 @@
       </control_channels>
     </plugin>
     <plugin name='receiver' filename='libarva_sim_receiver.so'>
-      <channels>2</channels>
+      <channels>1</channels>
+      <sensor_name>receiver1</sensor_name>
       <frame_id>artva</frame_id>
     </plugin>
     <static>0</static>
