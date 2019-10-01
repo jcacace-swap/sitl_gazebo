@@ -199,6 +199,7 @@ void GazeboMavlinkInterface::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf
   // Publish gazebo's motor_speed message
   motor_velocity_reference_pub_ = node_handle_->Advertise<mav_msgs::msgs::CommandMotorSpeed>("~/" + model_->GetName() + motor_velocity_reference_pub_topic_, 1);
 
+
   _rotor_count = 5;
 #if GAZEBO_MAJOR_VERSION >= 9
   last_time_ = world_->SimTime();
@@ -381,13 +382,18 @@ void GazeboMavlinkInterface::OnUpdate(const common::UpdateInfo&  /*_info*/) {
         turning_velocities_msg.add_motor_speed(0);
       } else {
         turning_velocities_msg.add_motor_speed(input_reference_[i]);
+
+				//std::cout << "Motor: " << i << "]: "<< input_reference_[i] << std::endl;
       }
     }
     // TODO Add timestamp and Header
     // turning_velocities_msg->header.stamp.sec = current_time.sec;
     // turning_velocities_msg->header.stamp.nsec = current_time.nsec;
-
+		//std::cout << "motor_velocity_reference_pub_" << std::endl;
     motor_velocity_reference_pub_->Publish(turning_velocities_msg);
+
+		
+
   }
 
   last_time_ = current_time;
@@ -919,6 +925,10 @@ void GazeboMavlinkInterface::handle_message(mavlink_message_t *msg)
 {
   switch (msg->msgid) {
   case MAVLINK_MSG_ID_HIL_ACTUATOR_CONTROLS:
+
+
+		//printf("New actuator_controls: %d\n", MAVLINK_MSG_ID_HIL_ACTUATOR_CONTROLS);
+
     mavlink_hil_actuator_controls_t controls;
     mavlink_msg_hil_actuator_controls_decode(msg, &controls);
     bool armed = false;
@@ -936,6 +946,7 @@ void GazeboMavlinkInterface::handle_message(mavlink_message_t *msg)
     for (unsigned i = 0; i < n_out_max; i++) {
       input_index_[i] = i;
     }
+	
 
     // set rotor speeds, controller targets
     input_reference_.resize(n_out_max);
@@ -943,11 +954,14 @@ void GazeboMavlinkInterface::handle_message(mavlink_message_t *msg)
       if (armed) {
         input_reference_[i] = (controls.controls[input_index_[i]] + input_offset_[i])
             * input_scaling_[i] + zero_position_armed_[i];
+
+
       } else {
         input_reference_[i] = zero_position_disarmed_[i];
       }
     }
 
+		
     received_first_referenc_ = true;
     break;
   }

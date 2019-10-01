@@ -256,6 +256,35 @@ add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/models/iris_with_terrain_s
 add_custom_target(sdf_with_terrain_sensors ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/models/iris_with_terrain_sensors/iris_with_terrain_sensors.sdf)
 
 
+#Tarot
+add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/models/tarot/tarot.sdf
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+  COMMAND rm -f ${CMAKE_CURRENT_SOURCE_DIR}/models/tarot/tarot.sdf
+  COMMAND ${PYTHON_EXECUTABLE} ${scripts_dir}/xacro.py -o  ${rotors_description_dir}/urdf/tarot/tarot_base.urdf  ${rotors_description_dir}/urdf/tarot/tarot_base.xacro enable_mavlink_interface:=${enable_mavlink_interface} enable_ground_truth:=${enable_ground_truth} enable_wind:=${enable_wind} enable_logging:=${enable_logging} rotors_description_dir:=${rotors_description_dir}
+  COMMAND gz sdf -p  ${rotors_description_dir}/urdf/tarot/tarot_base.urdf >> ${CMAKE_CURRENT_SOURCE_DIR}/models/tarot/tarot.sdf
+  COMMAND rm -f ${rotors_description_dir}/urdf/tarot/tarot_base.urdf
+  DEPENDS ${rotors_description_dir}/urdf/tarot/tarot.xacro
+  DEPENDS ${rotors_description_dir}/urdf/tarot/tarot_base.xacro
+  DEPENDS ${rotors_description_dir}/urdf/component_snippets.xacro
+  )
+add_custom_target(tarot_sdf ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/models/tarot/tarot.sdf)
+
+#Tarot with snake
+add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/models/tarot_with_snake/tarot_with_snake.sdf
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+  COMMAND rm -f ${CMAKE_CURRENT_SOURCE_DIR}/models/tarot_with_snake/tarot_with_snake.sdf
+  COMMAND ${PYTHON_EXECUTABLE} ${scripts_dir}/xacro.py -o  ${rotors_description_dir}/urdf/tarot_with_snake/tarot_base.urdf  ${rotors_description_dir}/urdf/tarot_with_snake/tarot_base.xacro enable_mavlink_interface:=${enable_mavlink_interface} enable_ground_truth:=${enable_ground_truth} enable_wind:=${enable_wind} enable_logging:=${enable_logging} rotors_description_dir:=${rotors_description_dir}
+  COMMAND gz sdf -p  ${rotors_description_dir}/urdf/tarot_with_snake/tarot_base.urdf >> ${CMAKE_CURRENT_SOURCE_DIR}/models/tarot_with_snake/tarot_with_snake.sdf
+  COMMAND rm -f ${rotors_description_dir}/urdf/tarot_with_snake/tarot_base.urdf
+  DEPENDS ${rotors_description_dir}/urdf/tarot_with_snake/tarot.xacro
+  DEPENDS ${rotors_description_dir}/urdf/tarot_with_snake/tarot_base.xacro
+  DEPENDS ${rotors_description_dir}/urdf/component_snippets.xacro
+  )
+add_custom_target(tarot_with_snake_sdf ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/models/tarot_with_snake/tarot_with_snake.sdf)
+
+
+
+
 #-----------#
 # Functions #
 #-----------#

@@ -31,6 +31,7 @@ void GazeboControllerInterface::Load(physics::ModelPtr _model, sdf::ElementPtr _
   // Store the pointer to the model.
   model_ = _model;
 
+
   world_ = model_->GetWorld();
 
   namespace_.clear();
@@ -77,7 +78,7 @@ void GazeboControllerInterface::OnUpdate(const common::UpdateInfo& /*_info*/) {
   for (int i = 0; i < input_reference_.size(); i++)
   turning_velocities_msg.add_motor_speed(input_reference_[i]);
   // Add header timestamp etc
-
+	std::cout << "Publishing: " << motor_velocity_reference_pub_ << std::endl;
   motor_velocity_reference_pub_->Publish(turning_velocities_msg);
 }
 

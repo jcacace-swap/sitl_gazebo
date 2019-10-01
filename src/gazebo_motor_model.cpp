@@ -167,6 +167,7 @@ void GazeboMotorModel::testProto(MotorSpeedPtr &msg) {
 
 // This gets called by the world update start event.
 void GazeboMotorModel::OnUpdate(const common::UpdateInfo& _info) {
+
   sampling_time_ = _info.simTime.Double() - prev_sim_time_;
   prev_sim_time_ = _info.simTime.Double();
   UpdateForcesAndMoments();
@@ -175,6 +176,9 @@ void GazeboMotorModel::OnUpdate(const common::UpdateInfo& _info) {
 }
 
 void GazeboMotorModel::VelocityCallback(CommandMotorSpeedPtr &rot_velocities) {
+
+
+	//std::cout << "rot_velocities: " << std::endl << rot_velocities << std::endl;
   if(rot_velocities->motor_speed_size() < motor_number_) {
     std::cout  << "You tried to access index " << motor_number_
       << " of the MotorSpeed message array which is of size " << rot_velocities->motor_speed_size() << "." << std::endl;
@@ -193,6 +197,7 @@ void GazeboMotorModel::UpdateForcesAndMoments() {
   double real_motor_velocity = motor_rot_vel_ * rotor_velocity_slowdown_sim_;
   double force = real_motor_velocity * real_motor_velocity * motor_constant_;
 
+	
   // scale down force linearly with forward speed
   // XXX this has to be modelled better
   //
