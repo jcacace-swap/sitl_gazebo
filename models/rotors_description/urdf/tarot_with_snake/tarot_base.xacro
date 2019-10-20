@@ -26,8 +26,9 @@
 
   <!-- macros for gazebo plugins, sensors -->
   <xacro:include filename="$(arg rotors_description_dir)/urdf/component_snippets.xacro" />
-
   <!-- Instantiate iris "mechanics" -->
+
+  <xacro:include filename="$(arg rotors_description_dir)/urdf/snake.xacro" />
   <xacro:include filename="$(arg rotors_description_dir)/urdf/tarot/tarot.xacro" />
 
   <xacro:if value="$(arg enable_wind)">
@@ -93,7 +94,64 @@
 		<origin xyz="0.12 0 -0.02" rpy="0.0 1.1 0.0" />
 	</xacro:camera_macro>
 
+
+	<xacro:snake
+		parent="base_link"
+	>
+	</xacro:snake>
+
+
 	<!--
+	
+	<link
+    name="base_link_snake">
+    <inertial>
+      <origin
+        xyz="0.0 0.0 0.0"
+        rpy="0 0 0" />
+      <mass
+        value="1.0239602501557125" />
+      <inertia
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://prisma_snake_support/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://prisma_snake_support/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+ 	
+
+	<joint name="base_snake_joint" type="fixed">
+      <origin xyz="0 0 10" rpy="0 0 0" />
+      <parent link="base_link" />
+      <child link="base_link_snake" />
+    </joint>
+
+
   <xacro:xtion_pro_live name="rgbd_camera" parent="base_link"> 
 	 	<origin xyz="0.11 0.0 -0.02" rpy="0.0 0.95 0.0"/>
     <origin xyz="0 0 0" rpy="0.0 0 0.0"/>

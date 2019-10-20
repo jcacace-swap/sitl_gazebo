@@ -3,15 +3,15 @@
     <link name='base_link'>
       <pose frame=''>0 0 0 0 -0 0</pose>
       <inertial>
-        <pose frame=''>1e-06 0 -0 0 -0 0</pose>
-        <mass>1.50001</mass>
+        <pose frame=''>1e-06 0.000199 0.000662 0 -0 0</pose>
+        <mass>1.51001</mass>
         <inertia>
-          <ixx>0.0347573</ixx>
-          <ixy>0</ixy>
-          <ixz>2.39998e-08</ixz>
-          <iyy>0.045894</iyy>
-          <iyz>0</iyz>
-          <izz>0.0977011</izz>
+          <ixx>0.0348656</ixx>
+          <ixy>2.38409e-10</ixy>
+          <ixz>2.47945e-08</ixz>
+          <iyy>0.0459934</iyy>
+          <iyz>-2.98014e-05</iyz>
+          <izz>0.0977101</izz>
         </inertia>
       </inertial>
       <collision name='base_link_fixed_joint_lump__/camera_raw_link_collision'>
@@ -50,6 +50,26 @@
           </friction>
         </surface>
       </collision>
+      <collision name='base_link_snake_collision_2'>
+        <pose frame=''>0 0.03 0.1 3.1415 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/base_link.STL</uri>
+          </mesh>
+        </geometry>
+        <surface>
+          <contact>
+            <ode>
+              <min_depth>0.001</min_depth>
+              <max_vel>0</max_vel>
+            </ode>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
       <visual name='base_link_fixed_joint_lump__/camera_raw_link_visual'>
         <pose frame=''>0.12 0 -0.02 3.14159 0.470796 3.14159</pose>
         <geometry>
@@ -70,6 +90,21 @@
           <mesh>
             <scale>0.001 0.001 0.001</scale>
             <uri>model://rotors_description/meshes/tarot.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/DarkGrey</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+      <visual name='base_link_snake_visual_2'>
+        <pose frame=''>0 0.03 0.1 3.1415 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/base_link.STL</uri>
           </mesh>
         </geometry>
         <material>
@@ -145,6 +180,1126 @@
           <upper>0</upper>
           <effort>0</effort>
           <velocity>0</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='LFrame'>
+      <pose frame=''>0.007728 -0.009987 0.100004 1.57189 0.000231 1.44557</pose>
+      <inertial>
+        <pose frame=''>-0.024847 -0.056361 -2e-06 0 -0 0</pose>
+        <mass>0.01</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0</iyy>
+          <iyz>0</iyz>
+          <izz>0</izz>
+        </inertia>
+      </inertial>
+      <collision name='LFrame_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/LFrame.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='LFrame_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/LFrame.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='JFrame' type='revolute'>
+      <child>LFrame</child>
+      <parent>base_link</parent>
+      <axis>
+        <xyz>0.001116 9.3e-05 0.999999</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='LMotor'>
+      <pose frame=''>0.007728 -0.009987 0.100004 -1.57057 2e-05 3.01636</pose>
+      <inertial>
+        <pose frame=''>-4.9e-05 -0.039863 -0.047114 0 -0 0</pose>
+        <mass>0.01</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0</iyy>
+          <iyz>0</iyz>
+          <izz>0</izz>
+        </inertia>
+      </inertial>
+      <collision name='LMotor_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/LMotor.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='LMotor_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/LMotor.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='JMotor' type='revolute'>
+      <child>LMotor</child>
+      <parent>LFrame</parent>
+      <axis>
+        <xyz>-0.124901 -0.992169 0.000231</xyz>
+        <limit>
+          <lower>-1.5708</lower>
+          <upper>1.5708</upper>
+          <effort>10</effort>
+          <velocity>1.57</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='L1'>
+      <pose frame=''>0.023679 0.116561 0.122422 1.56966 0.000231 1.44557</pose>
+      <inertial>
+        <pose frame=''>0.0259 0.024 -0 0 -0 0</pose>
+        <mass>0.0209796</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0</iyy>
+          <iyz>0</iyz>
+          <izz>0</izz>
+        </inertia>
+      </inertial>
+      <collision name='L1_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L1.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='L1_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L1.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='J1' type='revolute'>
+      <child>L1</child>
+      <parent>LMotor</parent>
+      <axis>
+        <xyz>0.124901 0.992169 -0.000231</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>0</upper>
+          <effort>0</effort>
+          <velocity>0</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='L2'>
+      <pose frame=''>0.030236 0.16865 0.12241 1.56965 0.000171 1.39237</pose>
+      <inertial>
+        <pose frame=''>0.025955 0.024006 -5e-06 0 -0 0</pose>
+        <mass>0.023831</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0</iyy>
+          <iyz>0</iyz>
+          <izz>0</izz>
+        </inertia>
+      </inertial>
+      <collision name='L2_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L2.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='L2_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L2.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='J2' type='revolute'>
+      <child>L2</child>
+      <parent>L1</parent>
+      <axis>
+        <xyz>-0.001098 0.000371 0.999999</xyz>
+        <limit>
+          <lower>-0.993999</lower>
+          <upper>1.1004</upper>
+          <effort>10</effort>
+          <velocity>1</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='L3'>
+      <pose frame=''>0.039554 0.220317 0.122401 1.56965 0.00016 1.3831</pose>
+      <inertial>
+        <pose frame=''>0.0259 0.024 -0 0 -0 0</pose>
+        <mass>0.0209796</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0</iyy>
+          <iyz>0</iyz>
+          <izz>0</izz>
+        </inertia>
+      </inertial>
+      <collision name='L3_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L3.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='L3_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L3.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='J3' type='revolute'>
+      <child>L3</child>
+      <parent>L2</parent>
+      <axis>
+        <xyz>-0.001098 0.000371 0.999999</xyz>
+        <limit>
+          <lower>-1.03792</lower>
+          <upper>1.05647</upper>
+          <effort>10</effort>
+          <velocity>1.57</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='L4'>
+      <pose frame=''>0.04935 0.271895 0.122392 1.56965 0.000161 1.38446</pose>
+      <inertial>
+        <pose frame=''>0.025955 0.024006 -5e-06 0 -0 0</pose>
+        <mass>0.023831</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0</iyy>
+          <iyz>0</iyz>
+          <izz>0</izz>
+        </inertia>
+      </inertial>
+      <collision name='L4_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L4.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='L4_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L4.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='J4' type='revolute'>
+      <child>L4</child>
+      <parent>L3</parent>
+      <axis>
+        <xyz>-0.001098 0.000371 0.999999</xyz>
+        <limit>
+          <lower>-1.04856</lower>
+          <upper>1.04584</upper>
+          <effort>10</effort>
+          <velocity>1.57</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='L5'>
+      <pose frame=''>0.059077 0.323486 0.122384 1.56965 0.000161 1.38424</pose>
+      <inertial>
+        <pose frame=''>0.0259 0.024 -0 0 -0 0</pose>
+        <mass>0.0209796</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0</iyy>
+          <iyz>0</iyz>
+          <izz>0</izz>
+        </inertia>
+      </inertial>
+      <collision name='L5_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L5.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='L5_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L5.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='J5' type='revolute'>
+      <child>L5</child>
+      <parent>L4</parent>
+      <axis>
+        <xyz>-0.001098 0.000371 0.999999</xyz>
+        <limit>
+          <lower>-1.04698</lower>
+          <upper>1.04741</upper>
+          <effort>10</effort>
+          <velocity>1.57</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='L6'>
+      <pose frame=''>0.068814 0.375075 0.122376 1.56965 0.000161 1.38426</pose>
+      <inertial>
+        <pose frame=''>0.025955 0.024006 -5e-06 0 -0 0</pose>
+        <mass>0.023831</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0</iyy>
+          <iyz>0</iyz>
+          <izz>0</izz>
+        </inertia>
+      </inertial>
+      <collision name='L6_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L6.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='L6_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L6.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='J6' type='revolute'>
+      <child>L6</child>
+      <parent>L5</parent>
+      <axis>
+        <xyz>-0.001098 0.000371 0.999999</xyz>
+        <limit>
+          <lower>-1.04722</lower>
+          <upper>1.04718</upper>
+          <effort>10</effort>
+          <velocity>1.57</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='L7'>
+      <pose frame=''>0.07855 0.426664 0.122367 1.56965 0.000161 1.38426</pose>
+      <inertial>
+        <pose frame=''>0.0259 0.024 -0 0 -0 0</pose>
+        <mass>0.0209796</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0</iyy>
+          <iyz>0</iyz>
+          <izz>0</izz>
+        </inertia>
+      </inertial>
+      <collision name='L7_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L7.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='L7_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L7.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='J7' type='revolute'>
+      <child>L7</child>
+      <parent>L6</parent>
+      <axis>
+        <xyz>-0.001098 0.000371 0.999999</xyz>
+        <limit>
+          <lower>-1.0472</lower>
+          <upper>1.0472</upper>
+          <effort>10</effort>
+          <velocity>1.57</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='L8'>
+      <pose frame=''>0.088287 0.478254 0.122359 1.56965 0.000161 1.38426</pose>
+      <inertial>
+        <pose frame=''>0.025955 0.024006 -5e-06 0 -0 0</pose>
+        <mass>0.023831</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0</iyy>
+          <iyz>0</iyz>
+          <izz>0</izz>
+        </inertia>
+      </inertial>
+      <collision name='L8_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L8.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='L8_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L8.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='J8' type='revolute'>
+      <child>L8</child>
+      <parent>L7</parent>
+      <axis>
+        <xyz>-0.001098 0.000371 0.999999</xyz>
+        <limit>
+          <lower>-1.0472</lower>
+          <upper>1.0472</upper>
+          <effort>10</effort>
+          <velocity>1.57</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='L9'>
+      <pose frame=''>0.098023 0.529843 0.12235 1.56965 0.000161 1.38426</pose>
+      <inertial>
+        <pose frame=''>0.0259 0.024 -0 0 -0 0</pose>
+        <mass>0.0209796</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0</iyy>
+          <iyz>0</iyz>
+          <izz>0</izz>
+        </inertia>
+      </inertial>
+      <collision name='L9_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L9.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='L9_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L9.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='J9' type='revolute'>
+      <child>L9</child>
+      <parent>L8</parent>
+      <axis>
+        <xyz>-0.001098 0.000371 0.999999</xyz>
+        <limit>
+          <lower>-1.0472</lower>
+          <upper>1.0472</upper>
+          <effort>10</effort>
+          <velocity>1.57</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='L10'>
+      <pose frame=''>0.107759 0.581432 0.122342 1.56965 0.000161 1.38426</pose>
+      <inertial>
+        <pose frame=''>0.025955 0.024006 -5e-06 0 -0 0</pose>
+        <mass>0.023831</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0</iyy>
+          <iyz>0</iyz>
+          <izz>0</izz>
+        </inertia>
+      </inertial>
+      <collision name='L10_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L10.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='L10_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L10.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='J10' type='revolute'>
+      <child>L10</child>
+      <parent>L9</parent>
+      <axis>
+        <xyz>-0.001098 0.000371 0.999999</xyz>
+        <limit>
+          <lower>-1.0472</lower>
+          <upper>1.0472</upper>
+          <effort>10</effort>
+          <velocity>1.57</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='L11'>
+      <pose frame=''>0.117496 0.633021 0.122333 1.56965 0.000161 1.38426</pose>
+      <inertial>
+        <pose frame=''>0.0259 0.024 -0 0 -0 0</pose>
+        <mass>0.0209796</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0</iyy>
+          <iyz>0</iyz>
+          <izz>0</izz>
+        </inertia>
+      </inertial>
+      <collision name='L11_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L11.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='L11_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L11.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='J11' type='revolute'>
+      <child>L11</child>
+      <parent>L10</parent>
+      <axis>
+        <xyz>-0.001098 0.000371 0.999999</xyz>
+        <limit>
+          <lower>-1.0472</lower>
+          <upper>1.0472</upper>
+          <effort>10</effort>
+          <velocity>1.57</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='L12'>
+      <pose frame=''>0.127232 0.684611 0.122325 1.56965 0.000161 1.38426</pose>
+      <inertial>
+        <pose frame=''>0.025955 0.024006 -5e-06 0 -0 0</pose>
+        <mass>0.023831</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0</iyy>
+          <iyz>0</iyz>
+          <izz>0</izz>
+        </inertia>
+      </inertial>
+      <collision name='L12_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L12.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='L12_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L12.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='J12' type='revolute'>
+      <child>L12</child>
+      <parent>L11</parent>
+      <axis>
+        <xyz>-0.001098 0.000371 0.999999</xyz>
+        <limit>
+          <lower>-1.0472</lower>
+          <upper>1.0472</upper>
+          <effort>10</effort>
+          <velocity>1.57</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='L13'>
+      <pose frame=''>0.136968 0.7362 0.122316 1.56965 0.000161 1.38426</pose>
+      <inertial>
+        <pose frame=''>0.0259 0.024 -0 0 -0 0</pose>
+        <mass>0.0209796</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0</iyy>
+          <iyz>0</iyz>
+          <izz>0</izz>
+        </inertia>
+      </inertial>
+      <collision name='L13_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L13.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='L13_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L13.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='J13' type='revolute'>
+      <child>L13</child>
+      <parent>L12</parent>
+      <axis>
+        <xyz>-0.001098 0.000371 0.999999</xyz>
+        <limit>
+          <lower>-1.0472</lower>
+          <upper>1.0472</upper>
+          <effort>10</effort>
+          <velocity>1.57</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='L14'>
+      <pose frame=''>0.146705 0.787789 0.122308 1.56965 0.000161 1.38426</pose>
+      <inertial>
+        <pose frame=''>0.025955 0.024006 -5e-06 0 -0 0</pose>
+        <mass>0.023831</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0</iyy>
+          <iyz>0</iyz>
+          <izz>0</izz>
+        </inertia>
+      </inertial>
+      <collision name='L14_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L14.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='L14_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L14.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='J14' type='revolute'>
+      <child>L14</child>
+      <parent>L13</parent>
+      <axis>
+        <xyz>-0.001098 0.000371 0.999999</xyz>
+        <limit>
+          <lower>-1.0472</lower>
+          <upper>1.0472</upper>
+          <effort>10</effort>
+          <velocity>1.57</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='L15'>
+      <pose frame=''>0.156441 0.839379 0.122299 1.56965 0.000161 1.38426</pose>
+      <inertial>
+        <pose frame=''>0.0259 0.024 -0 0 -0 0</pose>
+        <mass>0.0209796</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0</iyy>
+          <iyz>0</iyz>
+          <izz>0</izz>
+        </inertia>
+      </inertial>
+      <collision name='L15_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L15.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='L15_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L15.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='J15' type='revolute'>
+      <child>L15</child>
+      <parent>L14</parent>
+      <axis>
+        <xyz>-0.001098 0.000371 0.999999</xyz>
+        <limit>
+          <lower>-1.0472</lower>
+          <upper>1.0472</upper>
+          <effort>10</effort>
+          <velocity>1.57</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='L16'>
+      <pose frame=''>0.166177 0.890968 0.122291 1.56965 0.000161 1.38426</pose>
+      <inertial>
+        <pose frame=''>0.025955 0.024006 -5e-06 0 -0 0</pose>
+        <mass>0.023831</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0</iyy>
+          <iyz>0</iyz>
+          <izz>0</izz>
+        </inertia>
+      </inertial>
+      <collision name='L16_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L16.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='L16_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L16.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='J16' type='revolute'>
+      <child>L16</child>
+      <parent>L15</parent>
+      <axis>
+        <xyz>-0.001098 0.000371 0.999999</xyz>
+        <limit>
+          <lower>-1.0472</lower>
+          <upper>1.0472</upper>
+          <effort>10</effort>
+          <velocity>1.57</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='L17'>
+      <pose frame=''>0.175914 0.942557 0.122282 1.56965 0.000161 1.38426</pose>
+      <inertial>
+        <pose frame=''>0.0259 0.024 -0 0 -0 0</pose>
+        <mass>0.0209796</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0</iyy>
+          <iyz>0</iyz>
+          <izz>0</izz>
+        </inertia>
+      </inertial>
+      <collision name='L17_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L17.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='L17_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L17.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='J17' type='revolute'>
+      <child>L17</child>
+      <parent>L16</parent>
+      <axis>
+        <xyz>-0.001098 0.000371 0.999999</xyz>
+        <limit>
+          <lower>-1.0472</lower>
+          <upper>1.0472</upper>
+          <effort>10</effort>
+          <velocity>1.57</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='L18'>
+      <pose frame=''>0.18565 0.994146 0.122274 1.56965 0.000161 1.38426</pose>
+      <inertial>
+        <pose frame=''>0.025955 0.024006 -5e-06 0 -0 0</pose>
+        <mass>0.023831</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0</iyy>
+          <iyz>0</iyz>
+          <izz>0</izz>
+        </inertia>
+      </inertial>
+      <collision name='L18_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L18.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='L18_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L18.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='J18' type='revolute'>
+      <child>L18</child>
+      <parent>L17</parent>
+      <axis>
+        <xyz>-0.001098 0.000371 0.999999</xyz>
+        <limit>
+          <lower>-1.0472</lower>
+          <upper>1.0472</upper>
+          <effort>10</effort>
+          <velocity>1.57</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='L20'>
+      <pose frame=''>0.195386 1.04574 0.122265 1.57042 -0.001148 -0.186533</pose>
+      <inertial>
+        <pose frame=''>0 0.024 -0.012862 0 -0 0</pose>
+        <mass>0.018026</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0</iyy>
+          <iyz>0</iyz>
+          <izz>0</izz>
+        </inertia>
+      </inertial>
+      <collision name='L20_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L20.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='L20_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/L20.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='J20' type='revolute'>
+      <child>L20</child>
+      <parent>L18</parent>
+      <axis>
+        <xyz>-0.001058 0.000586 0.999999</xyz>
+        <limit>
+          <lower>-1.0773</lower>
+          <upper>1.01709</upper>
+          <effort>10</effort>
+          <velocity>1.57</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='Probe'>
+      <pose frame=''>0.201481 1.07818 0.146253 1.57042 -0.001148 -0.186533</pose>
+      <inertial>
+        <pose frame=''>0.000802 0 -0.008467 0 -0 0</pose>
+        <mass>0.0272047</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0</iyy>
+          <iyz>0</iyz>
+          <izz>0</izz>
+        </inertia>
+      </inertial>
+      <collision name='Probe_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/Probe.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='Probe_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://rotors_description/meshes/snake/Probe.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='Probe' type='revolute'>
+      <child>Probe</child>
+      <parent>L20</parent>
+      <axis>
+        <xyz>0.982652 -0.185453 0.001148</xyz>
+        <limit>
+          <lower>-1.39626</lower>
+          <upper>1.39626</upper>
+          <effort>10</effort>
+          <velocity>1.57</velocity>
         </limit>
         <dynamics>
           <spring_reference>0</spring_reference>
@@ -606,6 +1761,9 @@
           <joint_control_type>position</joint_control_type>
         </channel>
       </control_channels>
+    </plugin>
+    <plugin name='gazebo_ros_control' filename='libgazebo_ros_control.so'>
+      <robotNamespace>/prisma_snake</robotNamespace>
     </plugin>
     <static>0</static>
     <plugin name='rotors_gazebo_imu_plugin' filename='libgazebo_imu_plugin.so'>

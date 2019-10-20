@@ -1,0 +1,1429 @@
+<?xml version="1.0"?>
+
+
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+<xacro:property name="DEG2RAD" value="0.017453292519943295"/>
+
+	
+		<xacro:macro name="transmission_block" params="joint_name">
+			<transmission name="tran1">
+				<type>transmission_interface/SimpleTransmission</type>
+				<joint name="${joint_name}">
+					<hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+				</joint>
+				<actuator name="motor1">
+					<hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+					<mechanicalReduction>1</mechanicalReduction>
+				</actuator>
+			</transmission>
+
+	</xacro:macro>
+
+		<xacro:macro name="snake" params="parent">
+		<link
+		  name="base_link_snake">
+			
+		  <inertial>
+		    <origin
+		      xyz="0.0 0.0 0.0"
+		      rpy="0 0 0" />
+		    <mass
+		      value="0.01" />
+		    <inertia
+		      ixx="0"
+		      ixy="0"
+		      ixz="0"
+		      iyy="0"
+		      iyz="0"
+		      izz="0" />
+		  </inertial>
+			
+
+		  <visual>
+		    <origin
+		      xyz="0 0 0"
+		      rpy="0 0 0" />
+		    <geometry>
+		      <mesh
+         		filename="package://rotors_description/meshes/snake/base_link.STL"/>
+		    </geometry>
+		    <material
+		      name="">
+		      <color
+		        rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+		    </material>
+		  </visual>
+			
+		  <collision>
+		    <origin
+		      xyz="0 0 0"
+		      rpy="0 0 0" />
+		    <geometry>
+		      <mesh
+         		filename="package://rotors_description/meshes/snake/base_link.STL"/>
+		    </geometry>
+		  </collision>
+	
+		</link>
+	 	
+
+		<joint name="base_snake_joint" type="fixed">
+	    <origin xyz="0.0 0.03 0.1" rpy="3.1415 0 0" />
+	    <parent link="base_link" />
+	    <child link="base_link_snake" />
+	  </joint>
+
+
+
+		
+	 <link
+    name="LFrame">
+
+			
+   		<inertial>
+      <origin
+        xyz="-0.0248469510078303 -0.0563614377028206 -2.48007551428148E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.01" />
+        <inertia
+         ixx="0.0"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.0"
+        iyz="0.0"
+        izz="0.0"  />
+    </inertial>
+	
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/LFrame.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+		
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/LFrame.STL" />
+      </geometry>
+    </collision>
+		
+  </link>
+
+  <joint
+    name="JFrame"
+    type="continuous">
+    <origin
+      xyz="0.00772821714225051 0.0399874234543578 0"
+      rpy="-1.56968951302515 -0.000139333432705093 -1.44556815371391" />
+    <parent
+      link="base_link_snake" />
+    <child
+      link="LFrame" />
+    <axis
+      xyz="0 1 0" />
+		<limit 
+      effort="10"
+      velocity="1.57" />
+  </joint>
+
+	
+  <link
+    name="LMotor">
+			
+    		<inertial>
+      <origin
+        xyz="-4.9420015905053E-05 -0.039862695766422 -0.0471138119874942"
+        rpy="0 0 0" />
+      <mass
+        value="0.01" />
+     <inertia
+         ixx="0.0"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.0"
+        iyz="0.0"
+        izz="0.0"  />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/LMotor.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+		
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/LMotor.STL" />
+      </geometry>
+    </collision>
+		
+  </link>
+  <joint
+    name="JMotor"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="1.57079632679539 1.56968077737062 -1.57079632679441" />
+    <parent
+      link="LFrame" />
+    <child
+      link="LMotor" />
+    <axis
+      xyz="0 0 1" />
+   	
+		 <limit
+      lower="-1.5707963267949"
+      upper="1.5707963267949"
+      effort="10"
+      velocity="1.57" />
+		
+  </joint>
+
+
+
+  <link
+    name="L1">
+			
+   			 <inertial>
+      <origin
+        xyz="0.0258999036432844 0.0239999454766124 -1.32746300583741E-08"
+        rpy="0 0 0" />
+      <mass
+        value="0.0209796269968244" />
+      <inertia
+         ixx="0.0"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.0"
+        iyz="0.0"
+        izz="0.0"  />
+    </inertial>
+
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+	
+		
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L1.STL" />
+      </geometry>
+    </collision>
+		
+  </link>
+  <joint
+    name="J1"
+    type="revolute">
+    <origin
+      xyz="-2.00511340840651E-05 -0.0224477590929567 -0.127545001201243"
+      rpy="3.14047710416521 1.5707963267949 0" />
+    <parent
+      link="LMotor" />
+    <child
+      link="L1" />
+
+    <limit
+      lower="0.0"
+      upper=".0"
+      effort="0"
+      velocity="0" />
+   </joint>
+
+
+  <link
+    name="L2">
+    <inertial>
+      <origin
+        xyz="0.0259552372390444 0.0240061735192464 -5.32338776261174E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.0238310340806089" />
+      <inertia
+        ixx="0.0"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.0"
+        iyz="0.0"
+        izz="0.0" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="J2"
+    type="revolute">
+    <origin
+      xyz="0.0524999999999857 0 0"
+      rpy="-3.44613297765151E-16 -0.0531985841861763 6.16156416136494E-17" />
+    <parent
+      link="L1" />
+    <child
+      link="L2" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-0.993998967010373"
+      upper="1.10039613538283"
+      effort="10"
+      velocity="1" />
+  </joint>
+
+	
+  <link
+    name="L3">
+    <inertial>
+      <origin
+        xyz="0.025899903643283 0.0239999454766124 -1.32746162048725E-08"
+        rpy="0 0 0" />
+      <mass
+        value="0.0209796269968245" />
+        <inertia
+        ixx="0.0"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.0"
+        iyz="0.0"
+        izz="0.0" />
+    </inertial>
+
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L3.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L3.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="J3"
+    type="revolute">
+    <origin
+      xyz="0.0524999999999941 0 0"
+      rpy="-1.02483196605471E-15 -0.00927416170523615 1.94243648657628E-16" />
+    <parent
+      link="L2" />
+    <child
+      link="L3" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1.03792338949131"
+      upper="1.05647171290189"
+      effort="10"
+      velocity="1.57" />
+  </joint>
+
+	
+  <link
+    name="L4">
+    <inertial>
+      <origin
+        xyz="0.0259552372386346 0.0240061735192758 -5.32338781440711E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.023831034080641" />
+       <inertia
+         ixx="0.0"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.0"
+        iyz="0.0"
+        izz="0.0"  />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L4.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L4.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint
+    name="J4"
+    type="revolute">
+    <origin
+      xyz="0.0524999999999841 0 0"
+      rpy="6.82180638636158E-16 0.001360891873656 -1.28641645294869E-16" />
+    <parent
+      link="L3" />
+    <child
+      link="L4" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1.04855844307021"
+      upper="1.04583665932299"
+       effort="10"
+      velocity="1.57" />
+
+  </joint>
+  <link
+    name="L5">
+    <inertial>
+      <origin
+        xyz="0.025899903643283 0.0239999454766124 -1.32746160244612E-08"
+        rpy="0 0 0" />
+      <mass
+        value="0.0209796269968245" />
+       <inertia
+         ixx="0.0"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.0"
+        iyz="0.0"
+        izz="0.0"  />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L5.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L5.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="J5"
+    type="revolute">
+    <origin
+      xyz="0.052499999999994 0 0"
+      rpy="6.8174634160447E-16 -0.000213553712368799 -1.28642001526135E-16" />
+    <parent
+      link="L4" />
+    <child
+      link="L5" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1.04698399748418"
+      upper="1.04741110490902"
+        effort="10"
+      velocity="1.57" />
+  </joint>
+  <link
+    name="L6">
+    <inertial>
+      <origin
+        xyz="0.0259552372386245 0.0240061735192769 -5.32338781600306E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.0238310340806418" />
+       <inertia
+         ixx="0.0"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.0"
+        iyz="0.0"
+        izz="0.0"  />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L6.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L6.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="J6"
+    type="revolute">
+    <origin
+      xyz="0.0524999999999838 0 0"
+      rpy="-6.82180007091541E-16 2.19047611694254E-05 1.28694797904904E-16" />
+    <parent
+      link="L5" />
+    <child
+      link="L6" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1.04721945595772"
+      upper="1.04717564643548"
+       effort="10"
+      velocity="1.57" />
+
+  </joint>
+  <link
+    name="L7">
+    <inertial>
+      <origin
+        xyz="0.025899903643283 0.0239999454766125 -1.32746143799434E-08"
+        rpy="0 0 0" />
+      <mass
+        value="0.0209796269968244" />
+       <inertia
+         ixx="0.0"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.0"
+        iyz="0.0"
+        izz="0.0"  />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L7.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L7.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="J7"
+    type="revolute">
+    <origin
+      xyz="0.0524999999999939 0 0"
+      rpy="4.33680868995059E-19 -1.98793423728103E-06 -8.31958655934646E-20" />
+    <parent
+      link="L6" />
+    <child
+      link="L7" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1.04719556326231"
+      upper="1.04719953913089"
+        effort="10"
+      velocity="1.57" />
+  </joint>
+  <link
+    name="L8">
+    <inertial>
+      <origin
+        xyz="0.0259552372386245 0.024006173519277 -5.32338781783492E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.0238310340806415" />
+       <inertia
+         ixx="0.0"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.0"
+        iyz="0.0"
+        izz="0.0"  />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L8.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L8.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="J8"
+    type="revolute">
+    <origin
+      xyz="0.0524999999999843 0 0"
+      rpy="0 1.54454299849949E-07 2.66348794243175E-20" />
+    <parent
+      link="L7" />
+    <child
+      link="L8" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1.04719770565085"
+      upper="1.04719739674235"
+        effort="10"
+      velocity="1.57" />
+
+  </joint>
+  <link
+    name="L9">
+    <inertial>
+      <origin
+        xyz="0.0258999036432833 0.0239999454766124 -1.3274614796277E-08"
+        rpy="0 0 0" />
+      <mass
+        value="0.0209796269968248" />
+      <inertia
+         ixx="0.0"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.0"
+        iyz="0.0"
+        izz="0.0"  />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L9.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L9.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="J9"
+    type="revolute">
+    <origin
+      xyz="0.0524999999999939 0 0"
+      rpy="-4.33680868994202E-19 -1.08901276885121E-08 1.07479867363426E-19" />
+    <parent
+      link="L8" />
+    <child
+      link="L9" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1.04719754030642"
+      upper="1.04719756208678"
+        effort="10"
+      velocity="1.57" />
+  </joint>
+  <link
+    name="L10">
+    <inertial>
+      <origin
+        xyz="0.0259552372386238 0.0240061735192769 -5.32338782140152E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.023831034080642" />
+       <inertia
+         ixx="0.0"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.0"
+        iyz="0.0"
+        izz="0.0"  />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L10.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L10.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="J10"
+    type="revolute">
+    <origin
+      xyz="0.0524999999999842 0 0"
+      rpy="4.33680868994202E-19 6.92822493819634E-10 -1.62630325872826E-19" />
+    <parent
+      link="L9" />
+    <child
+      link="L10" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1.04719755188937"
+      upper="1.04719755050383"
+       effort="10"
+      velocity="1.57" />
+
+  </joint>
+  <link
+    name="L11">
+    <inertial>
+      <origin
+        xyz="0.0258999036432864 0.0239999454766124 -1.32746069969603E-08"
+        rpy="0 0 0" />
+      <mass
+        value="0.0209796269968246" />
+       <inertia
+         ixx="0.0"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.0"
+        iyz="0.0"
+        izz="0.0"  />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L11.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L11.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="J11"
+    type="revolute">
+    <origin
+      xyz="0.0524999999999936 0 0"
+      rpy="-4.33680868994202E-19 -3.65752428344024E-11 7.99046381186225E-20" />
+    <parent
+      link="L10" />
+    <child
+      link="L11" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1.04719755115998"
+      upper="1.04719755123322"
+        effort="10"
+      velocity="1.57" />
+  </joint>
+  <link
+    name="L12">
+    <inertial>
+      <origin
+        xyz="0.025955237238624 0.0240061735192769 -5.32338781687736E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.0238310340806418" />
+       <inertia
+         ixx="0.0"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.0"
+        iyz="0.0"
+        izz="0.0"  />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L12.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L12.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="J12"
+    type="revolute">
+    <origin
+      xyz="0.0524999999999876 0 0"
+      rpy="1.36392633298676E-15 8.79296635503124E-14 -2.57336325989313E-16" />
+    <parent
+      link="L11" />
+    <child
+      link="L12" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1.04719755119664"
+      upper="1.04719755119656"
+        effort="10"
+      velocity="1.57" />
+
+  </joint>
+  <link
+    name="L13">
+    <inertial>
+      <origin
+        xyz="0.0258999036432828 0.0239999454766124 -1.32746141301432E-08"
+        rpy="0 0 0" />
+      <mass
+        value="0.0209796269968244" />
+       <inertia
+         ixx="0.0"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.0"
+        iyz="0.0"
+        izz="0.0"  />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L13.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L13.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="J13"
+    type="revolute">
+    <origin
+      xyz="0.0524999999999936 0 0"
+      rpy="0 -8.66251514963778E-14 -9.40349878526897E-22" />
+    <parent
+      link="L12" />
+    <child
+      link="L13" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1.04719755119646"
+      upper="1.04719755119674"
+        effort="10"
+      velocity="1.57" />
+  </joint>
+  <link
+    name="L14">
+    <inertial>
+      <origin
+        xyz="0.0259552372386244 0.0240061735192769 -5.32338781528141E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.0238310340806418" />
+      <inertia
+         ixx="0.0"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.0"
+        iyz="0.0"
+        izz="0.0"  />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L14.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L14.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="J14"
+    type="revolute">
+    <origin
+      xyz="0.0524999999999842 0 0"
+      rpy="2.16840434497101E-19 8.65973959207622E-14 -2.71050543121376E-20" />
+    <parent
+      link="L13" />
+    <child
+      link="L14" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1.04719755119664"
+      upper="1.04719755119656"
+        effort="10"
+      velocity="1.57" />
+
+  </joint>
+  <link
+    name="L15">
+    <inertial>
+      <origin
+        xyz="0.0258999036432833 0.0239999454766124 -1.32746146297436E-08"
+        rpy="0 0 0" />
+      <mass
+        value="0.0209796269968246" />
+      <inertia
+         ixx="0.0"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.0"
+        iyz="0.0"
+        izz="0.0"  />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L15.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L15.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="J15"
+    type="revolute">
+    <origin
+      xyz="0.0524999999999939 0 0"
+      rpy="0 -8.93729534823251E-14 -5.51504585028022E-20" />
+    <parent
+      link="L14" />
+    <child
+      link="L15" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1.04719755119646"
+      upper="1.04719755119674"
+        effort="10"
+      velocity="1.57" />
+  </joint>
+  <link
+    name="L16">
+    <inertial>
+      <origin
+        xyz="0.0259552372386249 0.0240061735192768 -5.32338782058273E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.0238310340806417" />
+      <inertia
+         ixx="0.0"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.0"
+        iyz="0.0"
+        izz="0.0"  />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L16.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L16.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="J16"
+    type="revolute">
+    <origin
+      xyz="0.0524999999999841 0 0"
+      rpy="4.33680868994202E-19 8.93174423310938E-14 -5.51504585028012E-20" />
+    <parent
+      link="L15" />
+    <child
+      link="L16" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1.04719755119664"
+      upper="1.04719755119656"
+       effort="10"
+      velocity="1.57" />
+
+  </joint>
+  <link
+    name="L17">
+    <inertial>
+      <origin
+        xyz="0.0258999036432834 0.0239999454766124 -1.32746160175223E-08"
+        rpy="0 0 0" />
+      <mass
+        value="0.020979626996825" />
+      <inertia
+         ixx="0.0"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.0"
+        iyz="0.0"
+        izz="0.0"  />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L17.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L17.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="J17"
+    type="revolute">
+    <origin
+      xyz="0.0524999999999943 0 0"
+      rpy="-4.33680868994202E-19 -8.66251514963778E-14 8.03748130578859E-20" />
+    <parent
+      link="L16" />
+    <child
+      link="L17" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1.04719755119646"
+      upper="1.04719755119674"
+        effort="10"
+      velocity="1.57" />
+  </joint>
+  <link
+    name="L18">
+    <inertial>
+      <origin
+        xyz="0.0259552372386239 0.0240061735192769 -5.32338782324726E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.0238310340806419" />
+       <inertia
+         ixx="0.0"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.0"
+        iyz="0.0"
+        izz="0.0"  />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L18.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L18.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="J18"
+    type="revolute">
+    <origin
+      xyz="0.052499999999985 0 0"
+      rpy="2.16840434497101E-19 8.65973959207622E-14 -2.71050543121376E-20" />
+    <parent
+      link="L17" />
+    <child
+      link="L18" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1.04719755119664"
+      upper="1.04719755119656"
+        effort="10"
+      velocity="1.57" />
+
+  </joint>
+ 
+  <link
+    name="L20">
+    <inertial>
+      <origin
+        xyz="1.06581410364015E-13 0.0239999402663998 -0.0128618438479611"
+        rpy="0 0 0" />
+      <mass
+        value="0.0180260051788456" />
+      <inertia
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L20.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.698039215686274 0.698039215686274 0.698039215686274 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/L20.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="J20"
+    type="revolute">
+    <origin
+      xyz="0.0524999999999842 0 0"
+      rpy="2.99006320856337 -1.57079631189374 -2.99028148340991" />
+    <parent
+      link="L18" />
+    <child
+      link="L20" />
+    <axis
+      xyz="0 1 0" />
+		 <limit
+      lower="-1.07730497228435"
+      upper="1.01709013010885"
+        effort="10"
+      velocity="1.57" />
+  </joint>
+  <link
+    name="Probe">
+    <inertial>
+      <origin
+        xyz="0.000801942613792017 3.73115540755475E-08 -0.00846677202059798"
+        rpy="0 0 0" />
+      <mass
+        value="0.0272047495648256" />
+       <inertia
+         ixx="0.0"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.0"
+        iyz="0.0"
+        izz="0.0"  />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/Probe.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/snake/Probe.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Probe"
+    type="revolute">
+    <origin
+      xyz="0 0.0239999402663998 -0.0329999999999961"
+      rpy="4.32434036495843E-16 2.18991491607312E-14 2.74150527112696E-15" />
+    <parent
+      link="L20" />
+    <child
+      link="Probe" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-1.39626340159547"
+      upper="1.39626340159547"
+        effort="10"
+      velocity="1.57" />
+  </joint>
+	
+
+		<xacro:transmission_block joint_name="JMotor"/>
+		<xacro:transmission_block joint_name="J1"/>
+		<xacro:transmission_block joint_name="J2"/>	
+		<xacro:transmission_block joint_name="J3"/>
+		<xacro:transmission_block joint_name="J4"/>
+		<xacro:transmission_block joint_name="J5"/>
+		<xacro:transmission_block joint_name="J6"/>
+		<xacro:transmission_block joint_name="J7"/>
+		<xacro:transmission_block joint_name="J8"/>
+		<xacro:transmission_block joint_name="J9"/>
+		<xacro:transmission_block joint_name="J10"/>
+		<xacro:transmission_block joint_name="J11"/>
+		<xacro:transmission_block joint_name="J12"/>
+		<xacro:transmission_block joint_name="J13"/>
+		<xacro:transmission_block joint_name="J14"/>
+		<xacro:transmission_block joint_name="J15"/>
+		<xacro:transmission_block joint_name="J16"/>
+		<xacro:transmission_block joint_name="J17"/>
+		<xacro:transmission_block joint_name="J18"/>
+		<xacro:transmission_block joint_name="J20"/>
+		<xacro:transmission_block joint_name="Probe"/>
+		
+		<gazebo>
+			<plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+				<robotNamespace>/prisma_snake</robotNamespace>
+			</plugin>
+		</gazebo>
+		
+
+
+
+
+
+
+
+	</xacro:macro>
+</robot>

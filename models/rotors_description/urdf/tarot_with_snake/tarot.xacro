@@ -21,7 +21,7 @@
   <xacro:property name="moment_constant" value="0.06" /> <!-- [m] -->
   <xacro:property name="time_constant_up" value="0.0125" /> <!-- [s] -->
   <xacro:property name="time_constant_down" value="0.025" /> <!-- [s] -->
-  <xacro:property name="max_rot_velocity" value="1100" /> <!-- [rad/s] -->
+  <xacro:property name="max_rot_velocity" value="5100" /> <!-- [rad/s] -->
   <xacro:property name="sin30" value="0.5" />
   <xacro:property name="cos30" value="0.866025403784" />
   <xacro:property name="sqrt2" value="1.4142135623730951" />
@@ -45,7 +45,7 @@
 
   <!-- Included URDF Files --> 
   <xacro:include filename="$(arg rotors_description_dir)/urdf/tarot_multirotor_base.xacro" />
-	<xacro:include filename="$(arg PrismaSnake/urdf/PrismaSnake.urdf.xacro" />
+
 
   <!-- Instantiate multirotor_base_macro once -->
   <xacro:multirotor_base_macro
@@ -146,4 +146,6 @@
     <origin xyz="-${arm_length_back_x} -${arm_length_back_y} ${rotor_offset_top}" rpy="0 0 0" />
     <xacro:insert_block name="rotor_inertia" />
   </xacro:vertical_rotor>
+
+
 </robot>
