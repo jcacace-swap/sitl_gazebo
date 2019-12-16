@@ -198,19 +198,13 @@
     <gazebo reference="rotor_${motor_number}">
       <material>Gazebo/${color}</material>
     </gazebo>
-    
-
   </xacro:macro>
-
-
-
-
-
 
    <!-- Rotor joint and link -->
   <xacro:macro name="vertical_tilting_rotor"
     params="robot_namespace suffix direction motor_constant moment_constant parent mass_rotor radius_rotor time_constant_up time_constant_down max_rot_velocity motor_number rotor_drag_coefficient rolling_moment_coefficient color mesh mesh_scale *origin *inertia">
 
+		<!-- -->
     <joint name="tilt_rotor_${motor_number}_joint" type="revolute">
       <xacro:insert_block name="origin" />
       <axis xyz="1 0 0" />
@@ -222,40 +216,48 @@
     <link name="tilt_rotor_${motor_number}">
 		  <inertial>
 		    <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
-		    <mass value="0.01" />
+		    <mass value="0.1" />
 		    <inertia 
-		      ixx="0"
+		      ixx="0.001"
 		      ixy="0"
 		      ixz="0"
-		      iyy="0"
+		      iyy="0.001"
 		      iyz="0"
-		      izz="0" />
+		      izz="0.001" />
 		  </inertial>			
 			<visual>
 					<geometry>
-				  	<cylinder length="0.1" radius="0.01"/>
+				  	<cylinder length="0.02" radius="0.01"/>
 					</geometry>
 			</visual>
 			<collision>
 				<geometry>
-					<cylinder length="0.03" radius="0.01"/>
+					<cylinder length="0.02" radius="0.01"/>
 				</geometry>
 			</collision>
     </link>
 
     <xacro:transmission_block joint_name="tilt_rotor_${motor_number}_joint"/>
-
+		<!-- -->
 
     <joint name="rotor_${motor_number}_joint" type="continuous">
+			<!---->	
 			<origin
-      xyz="0 0.0 1.2"
+      xyz="0 0.0 0.018"
       rpy="0.0 0.0 0.0"
 			/>
-
+			<!--
+			<xacro:insert_block name="origin" />
+      -->
       <axis xyz="0 0 1" />
       <!-- TODO(ff): not currently set because it's not yet supported -->
       <!-- <limit effort="2000" velocity="${max_rot_velocity}" /> -->
-      <parent link="tilt_rotor_${motor_number}" />
+      
+			<parent link="tilt_rotor_${motor_number}" />
+
+      <!--
+			<parent link="${parent}" />
+			-->
       <child link="rotor_${motor_number}" />
 
     </joint>

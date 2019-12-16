@@ -23,7 +23,8 @@
   <xacro:arg name='enable_ground_truth' default='false' />
   <xacro:arg name='enable_logging' default='false' />
   <xacro:arg name='log_file' default='iris' />
-  <xacro:arg name="rotors_description_dir" default="/home/jcacace/dev/ROS/src/UAV/Firmware/Tools/sitl_gazebo/models/rotors_description"/>
+
+  <xacro:arg name="rotors_description_dir" default="/home/jcacace/dev/ros_ws/src/Firmware/Tools/sitl_gazebo/models/rotors_description"/>
   <!-- macros for gazebo plugins, sensors -->
   <xacro:include filename="$(arg rotors_description_dir)/urdf/component_snippets.xacro" />
 
