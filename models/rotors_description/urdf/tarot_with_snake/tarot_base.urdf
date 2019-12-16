@@ -47,6 +47,7 @@
   <!-- Included URDF Files -->
   <!-- Main multirotor link -->
   <!-- Rotor joint and link -->
+  <!-- Rotor joint and link -->
   <!--<xacro:include filename="$(arg PrismaSnake/urdf/prisma_snake.urdf.xacro" />-->
   <!-- Instantiate multirotor_base_macro once -->
   <link name="base_link"/>
@@ -102,7 +103,26 @@
       </surface>
     </collision>
   </gazebo>
+  <!--
+  <xacro:tilting_rotor
+    motor_number="0"
+    parent="base_link">
+    <origin xyz="${arm_length_front_x} -${arm_length_front_y} ${rotor_offset_top}" rpy="0 0 0" />
+  </xacro:tilting_rotor>
+  -->
   <!-- Instantiate rotors -->
+  <joint name="tilt_rotor_0_joint" type="revolute">
+    <origin rpy="0 0 0" xyz="0.21 -0.21 0.033"/>
+    <axis xyz="1 0 0"/>
+    <parent link="base_link"/>
+    <child link="tilt_rotor_0"/>
+    <limit effort="100" lower="-1.5707963267949" upper="1.5707963267949" velocity="1.57"/>
+  </joint>
+  <link name="tilt_rotor_0">
+
+
+
+    </link>
   <joint name="rotor_0_joint" type="continuous">
     <origin rpy="0 0 0" xyz="0.21 -0.21 0.033"/>
     <axis xyz="0 0 1"/>
@@ -153,22 +173,30 @@
       <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
       <motorSpeedPubTopic>/motor_speed/0</motorSpeedPubTopic>
       <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
-      <!--
-        <gazebo_joint_control_pid>
-          <p>0.1</p>
-          <i>0</i>
-          <d>0</d>
-          <iMax>0</iMax>
-          <iMin>0</iMin>
-          <cmdMax>3</cmdMax>
-          <cmdMin>-3</cmdMin>
-        </gazebo_joint_control_pid>
-      -->
     </plugin>
   </gazebo>
   <gazebo reference="rotor_0">
     <material>Gazebo/Blue</material>
   </gazebo>
+  <!--
+  <xacro:tilting_rotor
+    motor_number="1"
+    parent="base_link">
+    <origin xyz="-${arm_length_back_x} ${arm_length_back_y} ${rotor_offset_top}" rpy="0 0 0" />
+  </xacro:tilting_rotor>
+  
+  <xacro:tilting_rotor
+    motor_number="2"
+    parent="base_link">
+    <origin xyz="${arm_length_front_x} ${arm_length_front_y} ${rotor_offset_top}" rpy="0 0 0" />
+  </xacro:tilting_rotor>
+  
+  <xacro:tilting_rotor
+    motor_number="3"
+    parent="base_link">
+    <origin xyz="-${arm_length_back_x} -${arm_length_back_y} ${rotor_offset_top}" rpy="0 0 0" />
+  </xacro:tilting_rotor>
+  -->
   <joint name="rotor_1_joint" type="continuous">
     <origin rpy="0 0 0" xyz="-0.21 0.21 0.033"/>
     <axis xyz="0 0 1"/>
@@ -219,17 +247,6 @@
       <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
       <motorSpeedPubTopic>/motor_speed/1</motorSpeedPubTopic>
       <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
-      <!--
-        <gazebo_joint_control_pid>
-          <p>0.1</p>
-          <i>0</i>
-          <d>0</d>
-          <iMax>0</iMax>
-          <iMin>0</iMin>
-          <cmdMax>3</cmdMax>
-          <cmdMin>-3</cmdMin>
-        </gazebo_joint_control_pid>
-      -->
     </plugin>
   </gazebo>
   <gazebo reference="rotor_1">
@@ -285,17 +302,6 @@
       <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
       <motorSpeedPubTopic>/motor_speed/2</motorSpeedPubTopic>
       <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
-      <!--
-        <gazebo_joint_control_pid>
-          <p>0.1</p>
-          <i>0</i>
-          <d>0</d>
-          <iMax>0</iMax>
-          <iMin>0</iMin>
-          <cmdMax>3</cmdMax>
-          <cmdMin>-3</cmdMin>
-        </gazebo_joint_control_pid>
-      -->
     </plugin>
   </gazebo>
   <gazebo reference="rotor_2">
@@ -351,17 +357,6 @@
       <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
       <motorSpeedPubTopic>/motor_speed/3</motorSpeedPubTopic>
       <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
-      <!--
-        <gazebo_joint_control_pid>
-          <p>0.1</p>
-          <i>0</i>
-          <d>0</d>
-          <iMax>0</iMax>
-          <iMin>0</iMin>
-          <cmdMax>3</cmdMax>
-          <cmdMin>-3</cmdMin>
-        </gazebo_joint_control_pid>
-      -->
     </plugin>
   </gazebo>
   <gazebo reference="rotor_3">
