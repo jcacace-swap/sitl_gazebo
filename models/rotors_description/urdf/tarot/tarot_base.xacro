@@ -24,7 +24,7 @@
   <xacro:arg name='enable_logging' default='false' />
   <xacro:arg name='log_file' default='iris' />
 
-  <xacro:arg name="rotors_description_dir" default="/home/jcacace/dev/ros_ws/src/Firmware/Tools/sitl_gazebo/models/rotors_description"/>
+  <xacro:arg name="rotors_description_dir" default="/home/jcacace/dev/ROS/src/UAV/Firmware/Tools/sitl_gazebo/models/rotors_description"/>
   <!-- macros for gazebo plugins, sensors -->
   <xacro:include filename="$(arg rotors_description_dir)/urdf/component_snippets.xacro" />
 
@@ -187,6 +187,15 @@
 
 	</xacro:sonar_sensor>
 	-->
+
+  <xacro:hokuyo_utm30lx name="laser_scanner" parent="base_link" ros_topic="scan" update_rate="40" ray_count="1081" min_angle="-135" max_angle="135">
+    <origin xyz="0.0 0.0 0.06" rpy="${M_PI} 0 0"/>
+  </xacro:hokuyo_utm30lx>
+
+  <xacro:xtion_pro_live name="rgbd_camera" parent="base_link"> 
+	 	<origin xyz="0.11 0.0 -0.02" rpy="0.0 0.95 0.0"/>
+    <origin xyz="0 0 0" rpy="0.0 0 0.0"/>
+	</xacro:xtion_pro_live>
 
   <!-- Mount an ADIS16448 IMU. -->
   <xacro:imu_plugin_macro

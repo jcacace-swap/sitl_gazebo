@@ -111,6 +111,7 @@
   </xacro:tilting_rotor>
   -->
   <!-- Instantiate rotors -->
+  <!-- -->
   <joint name="tilt_rotor_0_joint" type="revolute">
     <origin rpy="0 0 0" xyz="0.21 -0.21 0.033"/>
     <axis xyz="1 0 0"/>
@@ -119,16 +120,46 @@
     <limit effort="100" lower="-1.5707963267949" upper="1.5707963267949" velocity="1.57"/>
   </joint>
   <link name="tilt_rotor_0">
-
-
-
-    </link>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <cylinder length="0.02" radius="0.01"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.02" radius="0.01"/>
+      </geometry>
+    </collision>
+  </link>
+  <transmission name="tran1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="tilt_rotor_0_joint">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor1">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <!-- -->
   <joint name="rotor_0_joint" type="continuous">
-    <origin rpy="0 0 0" xyz="0.21 -0.21 0.033"/>
+    <!---->
+    <origin rpy="0.0 0.0 0.0" xyz="0 0.0 0.018"/>
+    <!--
+			<xacro:insert_block name="origin" />
+      -->
     <axis xyz="0 0 1"/>
     <!-- TODO(ff): not currently set because it's not yet supported -->
     <!-- <limit effort="2000" velocity="${max_rot_velocity}" /> -->
-    <parent link="base_link"/>
+    <parent link="tilt_rotor_0"/>
+    <!--
+			<parent link="${parent}" />
+			-->
     <child link="rotor_0"/>
   </joint>
   <!-- TODO(ff): not currently set because it's not yet supported -->
@@ -178,31 +209,55 @@
   <gazebo reference="rotor_0">
     <material>Gazebo/Blue</material>
   </gazebo>
-  <!--
-  <xacro:tilting_rotor
-    motor_number="1"
-    parent="base_link">
-    <origin xyz="-${arm_length_back_x} ${arm_length_back_y} ${rotor_offset_top}" rpy="0 0 0" />
-  </xacro:tilting_rotor>
-  
-  <xacro:tilting_rotor
-    motor_number="2"
-    parent="base_link">
-    <origin xyz="${arm_length_front_x} ${arm_length_front_y} ${rotor_offset_top}" rpy="0 0 0" />
-  </xacro:tilting_rotor>
-  
-  <xacro:tilting_rotor
-    motor_number="3"
-    parent="base_link">
-    <origin xyz="-${arm_length_back_x} -${arm_length_back_y} ${rotor_offset_top}" rpy="0 0 0" />
-  </xacro:tilting_rotor>
-  -->
-  <joint name="rotor_1_joint" type="continuous">
+  <!-- -->
+  <joint name="tilt_rotor_1_joint" type="revolute">
     <origin rpy="0 0 0" xyz="-0.21 0.21 0.033"/>
+    <axis xyz="1 0 0"/>
+    <parent link="base_link"/>
+    <child link="tilt_rotor_1"/>
+    <limit effort="100" lower="-1.5707963267949" upper="1.5707963267949" velocity="1.57"/>
+  </joint>
+  <link name="tilt_rotor_1">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <cylinder length="0.02" radius="0.01"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.02" radius="0.01"/>
+      </geometry>
+    </collision>
+  </link>
+  <transmission name="tran1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="tilt_rotor_1_joint">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor1">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <!-- -->
+  <joint name="rotor_1_joint" type="continuous">
+    <!---->
+    <origin rpy="0.0 0.0 0.0" xyz="0 0.0 0.018"/>
+    <!--
+			<xacro:insert_block name="origin" />
+      -->
     <axis xyz="0 0 1"/>
     <!-- TODO(ff): not currently set because it's not yet supported -->
     <!-- <limit effort="2000" velocity="${max_rot_velocity}" /> -->
-    <parent link="base_link"/>
+    <parent link="tilt_rotor_1"/>
+    <!--
+			<parent link="${parent}" />
+			-->
     <child link="rotor_1"/>
   </joint>
   <!-- TODO(ff): not currently set because it's not yet supported -->
@@ -252,12 +307,55 @@
   <gazebo reference="rotor_1">
     <material>Gazebo/DarkGrey</material>
   </gazebo>
-  <joint name="rotor_2_joint" type="continuous">
+  <!-- -->
+  <joint name="tilt_rotor_2_joint" type="revolute">
     <origin rpy="0 0 0" xyz="0.21 0.21 0.033"/>
+    <axis xyz="1 0 0"/>
+    <parent link="base_link"/>
+    <child link="tilt_rotor_2"/>
+    <limit effort="100" lower="-1.5707963267949" upper="1.5707963267949" velocity="1.57"/>
+  </joint>
+  <link name="tilt_rotor_2">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <cylinder length="0.02" radius="0.01"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.02" radius="0.01"/>
+      </geometry>
+    </collision>
+  </link>
+  <transmission name="tran1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="tilt_rotor_2_joint">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor1">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <!-- -->
+  <joint name="rotor_2_joint" type="continuous">
+    <!---->
+    <origin rpy="0.0 0.0 0.0" xyz="0 0.0 0.018"/>
+    <!--
+			<xacro:insert_block name="origin" />
+      -->
     <axis xyz="0 0 1"/>
     <!-- TODO(ff): not currently set because it's not yet supported -->
     <!-- <limit effort="2000" velocity="${max_rot_velocity}" /> -->
-    <parent link="base_link"/>
+    <parent link="tilt_rotor_2"/>
+    <!--
+			<parent link="${parent}" />
+			-->
     <child link="rotor_2"/>
   </joint>
   <!-- TODO(ff): not currently set because it's not yet supported -->
@@ -307,12 +405,55 @@
   <gazebo reference="rotor_2">
     <material>Gazebo/Blue</material>
   </gazebo>
-  <joint name="rotor_3_joint" type="continuous">
+  <!-- -->
+  <joint name="tilt_rotor_3_joint" type="revolute">
     <origin rpy="0 0 0" xyz="-0.21 -0.21 0.033"/>
+    <axis xyz="1 0 0"/>
+    <parent link="base_link"/>
+    <child link="tilt_rotor_3"/>
+    <limit effort="100" lower="-1.5707963267949" upper="1.5707963267949" velocity="1.57"/>
+  </joint>
+  <link name="tilt_rotor_3">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <cylinder length="0.02" radius="0.01"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.02" radius="0.01"/>
+      </geometry>
+    </collision>
+  </link>
+  <transmission name="tran1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="tilt_rotor_3_joint">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor1">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <!-- -->
+  <joint name="rotor_3_joint" type="continuous">
+    <!---->
+    <origin rpy="0.0 0.0 0.0" xyz="0 0.0 0.018"/>
+    <!--
+			<xacro:insert_block name="origin" />
+      -->
     <axis xyz="0 0 1"/>
     <!-- TODO(ff): not currently set because it's not yet supported -->
     <!-- <limit effort="2000" velocity="${max_rot_velocity}" /> -->
-    <parent link="base_link"/>
+    <parent link="tilt_rotor_3"/>
+    <!--
+			<parent link="${parent}" />
+			-->
     <child link="rotor_3"/>
   </joint>
   <!-- TODO(ff): not currently set because it's not yet supported -->
@@ -362,6 +503,92 @@
   <gazebo reference="rotor_3">
     <material>Gazebo/DarkGrey</material>
   </gazebo>
+  <!--
+  <xacro:tilting_rotor
+    motor_number="1"
+    parent="base_link">
+    <origin xyz="-${arm_length_back_x} ${arm_length_back_y} ${rotor_offset_top}" rpy="0 0 0" />
+  </xacro:tilting_rotor>
+  
+  <xacro:tilting_rotor
+    motor_number="2"
+    parent="base_link">
+    <origin xyz="${arm_length_front_x} ${arm_length_front_y} ${rotor_offset_top}" rpy="0 0 0" />
+  </xacro:tilting_rotor>
+  
+  <xacro:tilting_rotor
+    motor_number="3"
+    parent="base_link">
+    <origin xyz="-${arm_length_back_x} -${arm_length_back_y} ${rotor_offset_top}" rpy="0 0 0" />
+  </xacro:tilting_rotor>
+  -->
+  <!--
+
+  <xacro:vertical_rotor
+    robot_namespace="${namespace}"
+    suffix="back_left"
+    direction="ccw"
+    motor_constant="${motor_constant}"
+    moment_constant="${moment_constant}"
+    parent="base_link"
+    mass_rotor="${mass_rotor}"
+    radius_rotor="${radius_rotor}"
+    time_constant_up="${time_constant_up}"
+    time_constant_down="${time_constant_down}"
+    max_rot_velocity="${max_rot_velocity}"
+    motor_number="1"
+    rotor_drag_coefficient="${rotor_drag_coefficient}"
+    rolling_moment_coefficient="${rolling_moment_coefficient}"
+    mesh="iris_prop"
+    mesh_scale="${mesh_scale_prop}"
+    color="DarkGrey">
+    <origin xyz="-${arm_length_back_x} ${arm_length_back_y} ${rotor_offset_top}" rpy="0 0 0" />
+    <xacro:insert_block name="rotor_inertia" />
+  </xacro:vertical_rotor>
+
+  <xacro:vertical_rotor robot_namespace="${namespace}"
+    suffix="front_left"
+    direction="cw"
+    motor_constant="${motor_constant}"
+    moment_constant="${moment_constant}"
+    parent="base_link"
+    mass_rotor="${mass_rotor}"
+    radius_rotor="${radius_rotor}"
+    time_constant_up="${time_constant_up}"
+    time_constant_down="${time_constant_down}"
+    max_rot_velocity="${max_rot_velocity}"
+    motor_number="2"
+    rotor_drag_coefficient="${rotor_drag_coefficient}"
+    rolling_moment_coefficient="${rolling_moment_coefficient}"
+    mesh="iris_prop"
+    mesh_scale="${mesh_scale_prop}"
+    color="Blue">
+    <origin xyz="${arm_length_front_x} ${arm_length_front_y} ${rotor_offset_top}" rpy="0 0 0" />
+    <xacro:insert_block name="rotor_inertia" />
+  </xacro:vertical_rotor>
+
+  <xacro:vertical_rotor robot_namespace="${namespace}"
+    suffix="back_right"
+    direction="cw"
+    motor_constant="${motor_constant}"
+    moment_constant="${moment_constant}"
+    parent="base_link"
+    mass_rotor="${mass_rotor}"
+    radius_rotor="${radius_rotor}"
+    time_constant_up="${time_constant_up}"
+    time_constant_down="${time_constant_down}"
+    max_rot_velocity="${max_rot_velocity}"
+    motor_number="3"
+    rotor_drag_coefficient="${rotor_drag_coefficient}"
+    rolling_moment_coefficient="${rolling_moment_coefficient}"
+    mesh="iris_prop"
+    mesh_scale="${mesh_scale_prop}"
+    color="DarkGrey">
+    <origin xyz="-${arm_length_back_x} -${arm_length_back_y} ${rotor_offset_top}" rpy="0 0 0" />
+    <xacro:insert_block name="rotor_inertia" />
+  </xacro:vertical_rotor>
+
+  -->
   <!-- Instantiate gps plugin. -->
   <gazebo>
     <plugin filename="libgazebo_gps_plugin.so" name="gps_plugin">
