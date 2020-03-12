@@ -15,6 +15,8 @@
   <!-- Macro to add the gps_plugin. -->
   <!-- Macro to add the range_plugin. FIll here! -->
   <!-- Macro to add the mavlink interface. -->
+  <!-- Macro to add the mavlink interface. -->
+  <!---->
   <!-- Macro to add an IMU. -->
   <!-- Macro to add a generic odometry sensor. -->
   <!-- Macro to add the wind plugin. -->

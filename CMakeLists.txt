@@ -16,6 +16,8 @@ include(GNUInstallDirs)
 ## Find Dependencies ##
 #######################
 
+
+
 # Add search directory for CMake on OS X
 list(APPEND CMAKE_MODULE_PATH /usr/local/share/cmake/Modules)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
@@ -44,7 +46,7 @@ endif()
 
 pkg_check_modules(OGRE OGRE)
 
-include_directories(SYSTEM ${GAZEBO_INCLUDE_DIRS})
+include_directories(SYSTEM ${GAZEBO_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS} )
 link_directories(${GAZEBO_LIBRARY_DIRS})
 
 add_subdirectory( external/OpticalFlow OpticalFlow )
@@ -283,6 +285,18 @@ add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/models/tarot_with_snake/ta
 add_custom_target(tarot_with_snake_sdf ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/models/tarot_with_snake/tarot_with_snake.sdf)
 
 
+#Tarot standalone
+add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/models/tarot_standalone/tarot_standalone.sdf
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+  COMMAND rm -f ${CMAKE_CURRENT_SOURCE_DIR}/models/tarot_standalone/tarot_standalone.sdf
+  COMMAND ${PYTHON_EXECUTABLE} ${scripts_dir}/xacro.py -o  ${rotors_description_dir}/urdf/tarot_standalone/tarot_base.urdf  ${rotors_description_dir}/urdf/tarot_standalone/tarot_base.xacro enable_ground_truth:=${enable_ground_truth} enable_wind:=${enable_wind} enable_logging:=${enable_logging} rotors_description_dir:=${rotors_description_dir}
+  COMMAND gz sdf -p  ${rotors_description_dir}/urdf/tarot_standalone/tarot_base.urdf >> ${CMAKE_CURRENT_SOURCE_DIR}/models/tarot_standalone/tarot_standalone.sdf
+  COMMAND rm -f ${rotors_description_dir}/urdf/tarot_standalone/tarot_base.urdf
+  DEPENDS ${rotors_description_dir}/urdf/tarot_standalone/tarot.xacro
+  DEPENDS ${rotors_description_dir}/urdf/tarot_standalone/tarot_base.xacro
+  DEPENDS ${rotors_description_dir}/urdf/component_snippets.xacro
+  )
+add_custom_target(tarot_standalone_sdf ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/models/tarot_standalone/tarot_standalone.sdf)
 
 
 #-----------#
@@ -368,6 +382,7 @@ add_library(gazebo_controller_interface SHARED src/gazebo_controller_interface.c
 add_library(gazebo_gimbal_controller_plugin SHARED src/gazebo_gimbal_controller_plugin.cpp)
 add_library(gazebo_imu_plugin SHARED src/gazebo_imu_plugin.cpp)
 add_library(gazebo_mavlink_interface SHARED src/gazebo_mavlink_interface.cpp src/geo_mag_declination.cpp)
+#add_library(gazebo_ros_interface SHARED src/gazebo_ros_interface.cpp src/geo_mag_declination.cpp)
 add_library(gazebo_motor_model SHARED src/gazebo_motor_model.cpp)
 add_library(gazebo_multirotor_base_plugin SHARED src/gazebo_multirotor_base_plugin.cpp)
 #add_library(gazebo_wind_plugin SHARED src/gazebo_wind_plugin.cpp)
@@ -384,7 +399,7 @@ set(plugins
   gazebo_controller_interface
   gazebo_gimbal_controller_plugin
   gazebo_imu_plugin
-  gazebo_mavlink_interface
+  #gazebo_ros_interface
   gazebo_motor_model
   gazebo_multirotor_base_plugin
   #gazebo_wind_plugin

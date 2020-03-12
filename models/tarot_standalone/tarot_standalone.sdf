@@ -748,7 +748,7 @@
       <robotNamespace/>
       <gpsNoise>1</gpsNoise>
     </plugin>
-    <plugin name='mavlink_interface' filename='libgazebo_mavlink_interface.so'>
+    <plugin name='ros_interface' filename='libgazebo_ros_interface.so'>
       <robotNamespace/>
       <imuSubTopic>/imu</imuSubTopic>
       <gpsSubTopic>/gps</gpsSubTopic>
